@@ -10,7 +10,7 @@
             --bg-color: #05070a;
             --panel-bg: rgba(18, 22, 32, 0.7);
             --accent-glow: #ff5500;
-            --leetify-glow: #00c8ff; 
+            --premier-glow: #b12ea6; /* Fioletowy CS2 Premier */
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
             --text-muted: #8b92a5;
@@ -39,7 +39,7 @@
         }
         @keyframes drift { from { transform: scale(1.05); } to { transform: scale(1.1); } }
 
-        /* --- SIDEBAR --- */
+        /* --- SIDEBAR NAWIGACYJNY --- */
         .sidebar {
             width: 80px;
             background: rgba(10, 12, 18, 0.9);
@@ -90,13 +90,13 @@
             align-items: center;
             margin-bottom: 10px;
         }
+        .welcome-text h2 { font-size: 2.2rem; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* --- PANEL LEETIFY --- */
-        .leetify-panel {
-            grid-column: span 2;
-            background: linear-gradient(135deg, rgba(0, 200, 255, 0.1), rgba(18, 22, 32, 0.7));
-            border: 1px solid var(--leetify-glow);
-            box-shadow: 0 0 20px rgba(0, 200, 255, 0.15);
+        /* --- NOWY PANEL: CS2 PREMIER & CROSSHAIR --- */
+        .cs2-profile-panel {
+            background: linear-gradient(135deg, rgba(177, 46, 166, 0.15), rgba(18, 22, 32, 0.7));
+            border: 1px solid var(--premier-glow);
+            box-shadow: 0 0 20px rgba(177, 46, 166, 0.1);
             padding: 25px;
             border-radius: 20px;
             display: flex;
@@ -105,32 +105,37 @@
             margin-bottom: 25px;
             backdrop-filter: blur(10px);
         }
-        .leetify-main { display: flex; flex-direction: column; }
-        .leetify-main span { font-size: 0.8rem; color: var(--leetify-glow); text-transform: uppercase; font-weight: bold; letter-spacing: 2px; }
-        .leetify-main h3 { color: #fff; font-size: 2.5rem; margin-top: 5px; text-shadow: 0 0 15px var(--leetify-glow); }
-        
-        .leetify-skills { display: flex; gap: 30px; width: 50%; }
-        .skill-bar-container { width: 100%; }
-        .skill-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 5px; color: var(--text-muted); }
-        .skill-label b { color: #fff; }
-        .skill-track { width: 100%; height: 8px; background: rgba(0,0,0,0.5); border-radius: 4px; overflow: hidden; }
-        .skill-fill { height: 100%; background: var(--leetify-glow); border-radius: 4px; box-shadow: 0 0 10px var(--leetify-glow); }
-        .fill-aim { width: 88%; }
-        .fill-pos { width: 92%; }
-        .fill-util { width: 64%; }
-
-        .leetify-link {
-            padding: 12px 25px;
-            background: var(--leetify-glow);
-            color: #000;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 0.85rem;
-            transition: 0.3s;
-            box-shadow: 0 0 15px var(--leetify-glow);
+        .premier-rating {
+            display: flex; flex-direction: column;
         }
-        .leetify-link:hover { transform: scale(1.05); background: #fff; }
+        .premier-rating span { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
+        .rating-box {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 2.5rem; font-weight: 900; color: #fff;
+            text-shadow: 0 0 15px var(--premier-glow);
+            margin-top: 5px;
+        }
+        .rating-box i { color: var(--premier-glow); font-size: 2rem; }
+        
+        .crosshair-section {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .crosshair-section span { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .crosshair-code {
+            display: flex; align-items: center; gap: 15px;
+            font-family: monospace; color: #fff; background: rgba(255,255,255,0.05);
+            padding: 8px 12px; border-radius: 8px; font-size: 0.9rem;
+        }
+        .copy-btn {
+            background: var(--premier-glow); border: none; color: #fff;
+            padding: 5px 10px; border-radius: 5px; cursor: pointer;
+            font-size: 0.7rem; text-transform: uppercase; font-weight: bold; transition: 0.3s;
+        }
+        .copy-btn:hover { background: #fff; color: #000; }
 
         /* --- STATYSTYKI & CONFIG --- */
         .stats-row {
@@ -140,25 +145,16 @@
             margin-bottom: 20px;
         }
         .stat-card {
-            background: var(--panel-bg);
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid var(--glass-border);
-            text-align: center;
-            backdrop-filter: blur(10px);
+            background: var(--panel-bg); padding: 20px; border-radius: 16px;
+            border: 1px solid var(--glass-border); text-align: center; backdrop-filter: blur(10px);
         }
         .stat-card span { display: block; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
         .stat-card b { font-size: 1.6rem; color: #fff; }
         
         .config-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px dashed var(--glass-border);
-            padding: 20px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 30px;
+            background: rgba(255,255,255,0.02); border: 1px dashed var(--glass-border);
+            padding: 20px; border-radius: 16px; display: flex; justify-content: space-around;
+            align-items: center; margin-bottom: 30px;
         }
         .config-item { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.85rem; }
         .config-item i { font-size: 1.2rem; color: #fff; }
@@ -166,12 +162,8 @@
 
         /* --- HARDWARE & GEAR SECTION --- */
         .gear-panel {
-            background: var(--panel-bg);
-            border-radius: 20px;
-            padding: 25px;
-            border: 1px solid var(--glass-border);
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
+            background: var(--panel-bg); border-radius: 20px; padding: 25px;
+            border: 1px solid var(--glass-border); margin-bottom: 30px; backdrop-filter: blur(10px);
         }
         .gear-title {
             color: var(--text-muted); font-size: 0.9rem; letter-spacing: 2px;
@@ -180,54 +172,21 @@
             display: flex; align-items: center; gap: 10px;
         }
         .gear-title i { color: #fff; }
-        .gear-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
+        .gear-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .gear-item {
             display: flex; align-items: center; gap: 15px;
             background: rgba(0,0,0,0.2); padding: 12px 15px;
-            border-radius: 12px; transition: 0.3s;
-            border: 1px solid transparent;
+            border-radius: 12px; transition: 0.3s; border: 1px solid transparent;
         }
-        .gear-item:hover {
-            border-color: var(--accent-glow);
-            transform: translateX(5px);
-            background: rgba(255, 85, 0, 0.05);
-        }
+        .gear-item:hover { border-color: var(--accent-glow); transform: translateX(5px); background: rgba(255, 85, 0, 0.05); }
         .gear-icon {
             width: 35px; height: 35px; display: flex; align-items: center; justify-content: center;
-            background: rgba(255, 255, 255, 0.05); color: #fff;
-            border-radius: 8px; font-size: 1rem;
+            background: rgba(255, 255, 255, 0.05); color: #fff; border-radius: 8px; font-size: 1rem;
         }
         .gear-item:hover .gear-icon { background: var(--accent-glow); box-shadow: 0 0 15px var(--accent-glow); }
         .gear-text { display: flex; flex-direction: column; }
         .gear-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px;}
         .gear-value { font-size: 0.9rem; color: #fff; font-weight: bold; }
-
-        /* --- PRZYCISKI --- */
-        .hero-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .btn {
-            background: var(--panel-bg); border: 1px solid var(--glass-border);
-            padding: 20px; border-radius: 15px; text-decoration: none;
-            color: #fff; display: flex; align-items: center; gap: 15px;
-            transition: 0.3s; backdrop-filter: blur(10px);
-        }
-        .btn:hover { transform: translateY(-5px); background: rgba(255,255,255,0.05); border-color: #fff; }
-        .btn i { font-size: 1.6rem; color: var(--accent-glow); }
-        .btn img { height: 28px; filter: grayscale(1); transition: 0.3s; }
-        .btn:hover img { filter: grayscale(0); }
-
-        .btn-twitch-live { border-color: rgba(145, 70, 255, 0.5); }
-        .btn-twitch-live i { color: #9146ff; }
-        .live-dot { width: 10px; height: 10px; background: #ff0000; border-radius: 50%; box-shadow: 0 0 10px #ff0000; animation: blink 1.5s infinite; margin-left: auto;}
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
         /* --- HISTORIA & WIDGET FACEIT --- */
         .history-section {
@@ -242,14 +201,51 @@
         }
         .match-row.loss { border-left-color: #ff3366; }
 
-        /* --- PRAWA KOLUMNA --- */
+        /* =========================================
+           PRAWA KOLUMNA (PANEL BOCZNY)
+           ========================================= */
         .right-col { display: flex; flex-direction: column; gap: 20px; }
+        
         .status-card {
             background: var(--panel-bg); padding: 20px; border-radius: 20px;
             border: 1px solid var(--glass-border); text-align: center;
         }
         .status-online { color: #00d381; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .dot { width: 8px; height: 8px; background: #00d381; border-radius: 50%; box-shadow: 0 0 10px #00d381; }
+
+        /* --- NOWY PANEL LINKÓW (Z BOKU) --- */
+        .links-panel {
+            background: var(--panel-bg);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+        }
+        .links-title {
+            text-align: center; color: var(--text-muted); font-size: 0.75rem;
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px;
+        }
+        .side-btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 kolumny w bocznym panelu */
+            gap: 10px;
+        }
+        .side-btn {
+            background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            padding: 15px 10px; border-radius: 12px; text-decoration: none;
+            color: #fff; display: flex; flex-direction: column; align-items: center;
+            gap: 8px; transition: 0.3s; text-align: center;
+        }
+        .side-btn:hover { background: rgba(255,255,255,0.08); border-color: #fff; transform: translateY(-3px); }
+        .side-btn i { font-size: 1.4rem; color: #fff; }
+        .side-btn img { height: 22px; filter: grayscale(1); transition: 0.3s; }
+        .side-btn:hover img { filter: grayscale(0); }
+        .side-btn span { font-size: 0.75rem; font-weight: bold; }
+
+        .btn-twitch-live { border-color: rgba(145, 70, 255, 0.5); }
+        .btn-twitch-live i { color: #9146ff; }
+        .btn-tiktok i { color: #ff0050; }
+
+        /* YT Card */
         .yt-card {
             background: #000; border-radius: 20px; overflow: hidden;
             border: 1px solid var(--glass-border); aspect-ratio: 9/16;
@@ -257,9 +253,8 @@
 
         @media (max-width: 1100px) {
             .main-content { grid-template-columns: 1fr; }
-            .right-col { display: none; }
-            .leetify-panel { flex-direction: column; gap: 20px; text-align: center; }
-            .leetify-skills { width: 100%; flex-direction: column; gap: 15px; }
+            .right-col { display: flex; flex-direction: column; }
+            .cs2-profile-panel { flex-direction: column; gap: 20px; text-align: center; }
             .gear-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -283,29 +278,24 @@
             </div>
         </div>
 
-        <div class="leetify-panel">
-            <div class="leetify-main">
-                <span>Leetify Rating</span>
-                <h3>+4.12</h3> 
-            </div>
-            <div class="leetify-skills">
-                <div class="skill-bar-container">
-                    <div class="skill-label">Aim <b>88</b></div>
-                    <div class="skill-track"><div class="skill-fill fill-aim"></div></div>
-                </div>
-                <div class="skill-bar-container">
-                    <div class="skill-label">Positioning <b>92</b></div>
-                    <div class="skill-track"><div class="skill-fill fill-pos"></div></div>
-                </div>
-                <div class="skill-bar-container">
-                    <div class="skill-label">Utility <b>64</b></div>
-                    <div class="skill-track"><div class="skill-fill fill-util"></div></div>
-                </div>
-            </div>
-            <a href="https://leetify.com/app/profile/76561198819835529" target="_blank" class="leetify-link">PROFIL</a>
-        </div>
-
         <div class="left-col">
+            
+            <div class="cs2-profile-panel">
+                <div class="premier-rating">
+                    <span>CS2 Premier Rating</span>
+                    <div class="rating-box">
+                        <i class="fa-solid fa-ranking-star"></i> 22,450
+                    </div>
+                </div>
+                <div class="crosshair-section">
+                    <span>Mój Celownik (Crosshair Code)</span>
+                    <div class="crosshair-code">
+                        CSGO-aBcDe-fGhIj-kLmNo-pQrSt-uVwXy 
+                        <button class="copy-btn">Kopiuj</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="stats-row">
                 <div class="stat-card" style="border-bottom: 3px solid var(--accent-glow);"><span>Poziom FACEIT</span><b>10</b></div>
                 <div class="stat-card"><span>Elo</span><b>2214</b></div>
@@ -316,7 +306,7 @@
                 <div class="config-item"><i class="fa-solid fa-mouse"></i> DPI <b>800</b></div>
                 <div class="config-item"><i class="fa-solid fa-crosshairs"></i> Sens <b>1.0</b></div>
                 <div class="config-item"><i class="fa-solid fa-desktop"></i> Res <b>1280x1024</b></div>
-                <div class="config-item"><i class="fa-solid fa-expand"></i> AR <b>4:3 Stretched</b></div>
+                <div class="config-item"><i class="fa-solid fa-expand"></i> AR <b>5:4 Stretched</b></div>
             </div>
 
             <div class="gear-panel">
@@ -369,26 +359,6 @@
                 </div>
             </div>
 
-            <div class="hero-grid">
-                <a href="https://dmarket.com/" target="_blank" class="btn">
-                    <img src="Dmarket.png" alt="D">
-                    <div><b>DMarket</b><br><small>Handluj skinami</small></div>
-                </a>
-                <a href="https://csfloat.com/" target="_blank" class="btn">
-                    <img src="csfloat.png" alt="F">
-                    <div><b>CSFloat</b><br><small>Baza danych</small></div>
-                </a>
-                <a href="https://www.tiktok.com/@x_refi_x" target="_blank" class="btn">
-                    <i class="fa-brands fa-tiktok" style="color: #fff;"></i>
-                    <div><b>TikTok</b><br><small>@x_refi_x</small></div>
-                </a>
-                <a href="https://www.twitch.tv/refi_" target="_blank" class="btn btn-twitch-live">
-                    <i class="fa-brands fa-twitch"></i>
-                    <div><b>Twitch</b><br><small>refi_</small></div>
-                    <div class="live-dot"></div>
-                </a>
-            </div>
-
             <div style="background: #090b0f; border-radius: 16px; padding: 15px; border: 1px solid var(--glass-border);">
                 <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-full-renew&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no" style="width:100%; height:170px; border:none;"></iframe>
             </div>
@@ -414,13 +384,35 @@
                 <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 5px;">GOTOWY DO GRY</p>
             </div>
 
+            <div class="links-panel">
+                <p class="links-title"><i class="fa-solid fa-link"></i> Platformy</p>
+                <div class="side-btn-grid">
+                    <a href="https://dmarket.com/" target="_blank" class="side-btn">
+                        <img src="Dmarket.png" alt="D" onerror="this.style.display='none'">
+                        <span>DMarket</span>
+                    </a>
+                    <a href="https://csfloat.com/" target="_blank" class="side-btn">
+                        <img src="csfloat.png" alt="F" onerror="this.style.display='none'">
+                        <span>CSFloat</span>
+                    </a>
+                    <a href="https://www.tiktok.com/@x_refi_x" target="_blank" class="side-btn btn-tiktok">
+                        <i class="fa-brands fa-tiktok"></i>
+                        <span>TikTok</span>
+                    </a>
+                    <a href="https://www.twitch.tv/refi_" target="_blank" class="side-btn btn-twitch-live">
+                        <i class="fa-brands fa-twitch"></i>
+                        <span>Twitch</span>
+                    </a>
+                </div>
+            </div>
+
             <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; letter-spacing: 2px;">PLAYLISTA REFI</p>
             <div class="yt-card">
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/blOGjmQVOp0?list=PLOhj10DD_CCHa8QHZKwfWN2VU0XEBEb3Z" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
             
-            <a href="ts3server://4gamers.gclan.pl" class="btn" style="justify-content: center;">
-                <i class="fa-solid fa-headset" style="color: #0088cc;"></i> TeamSpeak 3
+            <a href="ts3server://4gamers.gclan.pl" class="side-btn" style="background: var(--panel-bg); flex-direction: row; justify-content: center;">
+                <i class="fa-solid fa-headset" style="color: #0088cc; font-size: 1.2rem;"></i> <span style="font-size: 0.9rem;">TeamSpeak 3</span>
             </a>
         </div>
     </div>
@@ -429,6 +421,17 @@
         const h = new Date().getHours();
         const greet = h<12 ? "Dzień dobry" : h<18 ? "Dobrego popołudnia" : "Dobry wieczór";
         document.getElementById('greet').textContent = `${greet}, REFI`;
+        
+        // Działający przycisk kopiowania celownika
+        document.querySelector('.copy-btn').addEventListener('click', function() {
+            navigator.clipboard.writeText('CSGO-aBcDe-fGhIj-kLmNo-pQrSt-uVwXy'); // Zmień na swój prawdziwy kod
+            this.textContent = 'Skopiowano!';
+            this.style.background = '#00d381';
+            setTimeout(() => {
+                this.textContent = 'Kopiuj';
+                this.style.background = 'var(--premier-glow)';
+            }, 2000);
+        });
     </script>
 </body>
 </html>
