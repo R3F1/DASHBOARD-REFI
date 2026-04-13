@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REFIs Dashboard PRO - CS2 Edition</title>
+    <title>REFI Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -36,20 +36,22 @@
             padding: 20px;
             overflow: hidden;
             position: relative;
+            background-color: #0b0f19; /* Tło zapasowe */
         }
 
-        /* --- ANIMOWANE TŁO CS2 (INFERNO) --- */
+        /* --- ANIMOWANE TŁO --- */
         .cs2-background {
             position: absolute;
             top: -5%;
             left: -5%;
             width: 110%;
             height: 110%;
-            background: url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/inferno_01.jpg') no-repeat center center;
+            /* Tymczasowe, działające ciemne tło. Jeśli wgrasz swoje na githuba, zamień link na 'tlo.jpg' */
+            background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop') no-repeat center center;
             background-size: cover;
             z-index: -2;
             animation: slowPan 30s infinite alternate linear;
-            filter: brightness(0.35) contrast(1.1);
+            filter: brightness(0.3) contrast(1.2);
         }
 
         .smoke-overlay {
@@ -83,23 +85,16 @@
             overflow-y: auto;
         }
 
-        .dashboard::-webkit-scrollbar {
-            width: 6px;
-        }
-        .dashboard::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.1); 
-        }
-        .dashboard::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.2); 
-            border-radius: 10px;
-        }
+        .dashboard::-webkit-scrollbar { width: 6px; }
+        .dashboard::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        .dashboard::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
         @keyframes slideUpFade {
             0% { opacity: 0; transform: translateY(40px) scale(0.95); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* --- NAGŁÓWEK Z LOGIEM --- */
+        /* NAGŁÓWEK Z LOGIEM */
         .header {
             text-align: center;
             margin-bottom: 25px;
@@ -109,11 +104,10 @@
         }
 
         .header-logo {
-            width: 140px; /* Dostosuj szerokość loga */
+            width: 120px;
             height: auto;
             margin-bottom: 10px;
-            /* Subtelna poświata dla loga */
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
         }
 
         .header h1 {
@@ -166,7 +160,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
-        /* Siatka przycisków */
+        /* SIATKA PRZYCISKÓW */
         .btn-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -199,11 +193,9 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .btn:hover i {
-            transform: scale(1.1);
-        }
+        .btn:hover i { transform: scale(1.1); }
 
-        /* Kolory przycisków */
+        /* KOLORY PRZYCISKÓW */
         .btn-history {
             grid-column: span 2;
             background: linear-gradient(135deg, #e64d00, #ff6600);
@@ -212,9 +204,7 @@
             letter-spacing: 1px;
             box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
         }
-        .btn-history:hover {
-            box-shadow: 0 8px 25px rgba(255, 85, 0, 0.6);
-        }
+        .btn-history:hover { box-shadow: 0 8px 25px rgba(255, 85, 0, 0.6); }
 
         .btn-dmarket {
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
@@ -260,23 +250,12 @@
             display: flex;
             flex-direction: column;
         }
-        .ts-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-        .ts-address {
-            font-size: 0.85rem;
-            color: #8da4b5;
-            font-weight: normal;
-        }
+        .ts-title { font-size: 1.1rem; font-weight: bold; }
+        .ts-address { font-size: 0.85rem; color: #8da4b5; font-weight: normal; }
 
         @media (max-width: 500px) {
-            .btn-grid {
-                grid-template-columns: 1fr;
-            }
-            .btn-history, .btn-faceit, .btn-ts {
-                grid-column: span 1;
-            }
+            .btn-grid { grid-template-columns: 1fr; }
+            .btn-history, .btn-faceit, .btn-ts { grid-column: span 1; }
         }
     </style>
 </head>
@@ -287,8 +266,8 @@
 
     <div class="dashboard">
         <div class="header">
-            <img src="logo.png" alt="Logo REFI" class="header-logo">
-            <h1>REFIs Dashboard</h1>
+            <img src="LOGO.PNG" alt="Logo REFI" class="header-logo" onerror="this.style.display='none'">
+            <h1>REFI DASHBOARD</h1>
             <div class="clock-container">
                 <span id="clock-time">00:00:00</span>
                 <span id="clock-date">Ładowanie daty...</span>
@@ -345,10 +324,8 @@
     <script>
         function updateClock() {
             const now = new Date();
-            
             const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
             const formattedTime = now.toLocaleTimeString('pl-PL', timeOptions);
-            
             const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
             let formattedDate = now.toLocaleDateString('pl-PL', dateOptions);
             formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
