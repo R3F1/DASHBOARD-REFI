@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REFI DASHBOARD - WIDE</title>
+    <title>REFI DASHBOARD - WIDE EDITION</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --panel-bg: rgba(10, 15, 20, 0.5);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --panel-bg: rgba(10, 15, 20, 0.6); 
+            --glass-border: rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
             --text-muted: #a1a9b5;
-            --faceit-glow: #ff5500;
+            --accent-glow: #ff5500;
             --steam-glow: #66c0f4;
-            --dmarket-glow: #00d381;
-            --csfloat-glow: #ff3366;
-            --tiktok-glow: #ff0050;
-            --twitch-glow: #9146FF;
-            --yt-glow: #ff0000;
+            --yt-red: #ff0000;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
         body {
             color: var(--text-main);
@@ -30,145 +31,165 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            background-color: #05070a;
-            overflow-x: hidden;
+            overflow: hidden; 
+            background: #05070a;
         }
 
-        /* TŁO DYMNE */
+        /* --- ANIMOWANE TŁO DYMNE --- */
         .background-fx {
             position: fixed;
             top: -10%; left: -10%; width: 120%; height: 120%;
-            background: radial-gradient(circle at 50% 50%, rgba(15, 25, 35, 0.7) 0%, #05070a 80%),
-                        url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/nuke_01.jpg');
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(20, 25, 35, 0.8) 0%, #05070a 80%),
+                url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/nuke_01.jpg'); 
             background-size: cover;
+            background-position: center;
             z-index: -2;
-            animation: smokeMove 40s infinite alternate ease-in-out;
-            filter: brightness(0.4);
+            animation: smokeMove 45s infinite alternate ease-in-out;
+            filter: brightness(0.3) contrast(1.2);
         }
         @keyframes smokeMove { from { transform: scale(1); } to { transform: scale(1.1) rotate(1deg); } }
 
-        /* KONTENER GŁÓWNY */
+        /* --- LOGO W ROGU --- */
+        .top-corner-logo {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 100;
+            text-align: right;
+        }
+        .header-logo {
+            width: 70px;
+            height: auto;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+            animation: logoPulse 2s infinite alternate;
+        }
+        @keyframes logoPulse { from { opacity: 0.8; } to { opacity: 1; filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.6)); } }
+
+        /* --- KONTENER GŁÓWNY (SZEROKI) --- */
         .dashboard-container {
-            background: var(--panel-bg);
+            background-color: var(--panel-bg);
             width: 95%;
-            max-width: 1100px; /* SZEROKI UKŁAD */
+            max-width: 1200px; /* SZEROKI UKŁAD */
             padding: 40px;
             border-radius: 30px;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr; /* Podział na staty i odtwarzacz */
+            gap: 35px;
             position: relative;
         }
 
-        /* LOGO W PRAWYM GÓRNYM ROGU */
-        .top-branding {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .header-logo {
-            width: 50px;
-            height: auto;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-        }
-
-        /* NAGŁÓWEK */
-        .dashboard-header {
-            margin-bottom: 40px;
-        }
-        .dashboard-header h1 {
-            font-size: 2rem;
-            letter-spacing: 8px;
+        /* --- LEWA KOLUMNA --- */
+        .header-section h1 {
+            font-size: 2.2rem;
             text-transform: uppercase;
+            letter-spacing: 8px;
             font-weight: 900;
-            opacity: 0.9;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .info-bar { display: flex; gap: 15px; margin-top: 10px; }
-        .glass-pill {
+
+        .info-pills {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .pill {
             background: rgba(255,255,255,0.05);
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 8px 20px;
+            border-radius: 40px;
             border: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+            color: var(--text-muted);
         }
+        .pill b { color: #fff; }
 
-        /* GŁÓWNY UKŁAD (LEWO / PRAWO) */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr; /* Lewa strona szersza na staty i przyciski */
-            gap: 30px;
-        }
-
-        /* WIDGET FACEIT */
         .widget-section {
-            background: #090b0f;
+            background: rgba(0,0,0,0.4);
             border-radius: 20px;
-            padding: 20px;
+            padding: 15px;
             border: 1px solid var(--glass-border);
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
-        .widget-section iframe { width: 100%; height: 170px; border: none; }
+        .widget-section iframe {
+            width: 100%;
+            height: 175px;
+            border: none;
+        }
 
-        /* PRZYCISKI W SIATCE */
-        .grid-buttons {
+        /* SIATKA PRZYCISKÓW */
+        .btn-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
-
         .btn {
             display: flex;
             align-items: center;
-            padding: 18px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--glass-border);
+            padding: 18px 25px;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 15px;
             text-decoration: none;
             color: #fff;
-            transition: 0.3s;
+            border: 1px solid var(--glass-border);
+            transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             gap: 15px;
         }
-        .btn:hover { transform: translateY(-5px); background: rgba(255,255,255,0.07); }
-        .btn i { font-size: 1.4rem; color: var(--text-muted); width: 25px; text-align: center; }
-        .btn-img { height: 24px; filter: grayscale(1); transition: 0.3s; }
+        .btn:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .btn i { font-size: 1.5rem; color: var(--text-muted); }
+        .btn-img { height: 26px; filter: grayscale(1); transition: 0.3s; }
         .btn:hover .btn-img { filter: grayscale(0); }
-        .btn-title { font-weight: 700; font-size: 0.95rem; display: block; }
+        .btn-label { display: flex; flex-direction: column; }
+        .btn-title { font-weight: 800; font-size: 1rem; }
         .btn-desc { font-size: 0.75rem; color: var(--text-muted); }
 
-        /* KOLORY GLOW */
-        .btn-faceit:hover { box-shadow: 0 5px 20px rgba(255, 85, 0, 0.2); border-color: var(--faceit-glow); }
-        .btn-steam:hover { box-shadow: 0 5px 20px rgba(102, 192, 244, 0.2); border-color: var(--steam-glow); }
-        .btn-tiktok:hover { box-shadow: 0 5px 20px rgba(255, 0, 80, 0.2); border-color: var(--tiktok-glow); }
-        .btn-twitch:hover { box-shadow: 0 5px 20px rgba(145, 70, 255, 0.2); border-color: var(--twitch-glow); }
-
-        /* YOUTUBE PLAYER */
-        .yt-section {
-            background: rgba(0,0,0,0.3);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid var(--glass-border);
-            height: 100%;
+        /* --- PRAWA KOLUMNA (YOUTUBE) --- */
+        .media-section {
             display: flex;
             flex-direction: column;
+            gap: 20px;
         }
-        .yt-section h3 { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 15px; letter-spacing: 2px; }
-        .yt-container {
+        .media-header {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--yt-red);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .yt-wrapper {
             flex-grow: 1;
-            border-radius: 12px;
+            background: #000;
+            border-radius: 20px;
             overflow: hidden;
-            aspect-ratio: 16/9;
-            border: 1px solid rgba(255,0,0,0.2);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
+            position: relative;
+        }
+        .yt-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
-        @media (max-width: 900px) {
-            .main-layout { grid-template-columns: 1fr; }
-            .top-branding { position: static; margin-bottom: 20px; justify-content: center; }
-            .dashboard-header { text-align: center; }
-            .info-bar { justify-content: center; }
+        /* --- RESPONSYWNOŚĆ --- */
+        @media (max-width: 950px) {
+            .dashboard-container { grid-template-columns: 1fr; overflow-y: auto; max-height: 90vh; }
+            body { overflow-y: auto; }
+            .top-corner-logo { position: static; text-align: center; margin-bottom: 20px; }
+            .yt-wrapper { height: 300px; }
         }
     </style>
 </head>
@@ -176,75 +197,77 @@
 
     <div class="background-fx"></div>
 
+    <div class="top-corner-logo">
+        <img src="LOGO.png" alt="REFI" class="header-logo" onerror="this.style.display='none'">
+    </div>
+
     <div class="dashboard-container">
         
-        <div class="top-branding">
-            <img src="LOGO.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
-        </div>
-
-        <div class="dashboard-header">
-            <h1>REFI DASHBOARD</h1>
-            <div class="info-bar">
-                <div class="glass-pill"><i class="fa-solid fa-clock"></i> <span id="clock">00:00</span></div>
-                <div class="glass-pill"><i class="fa-solid fa-calendar"></i> <span id="date">Data</span></div>
-            </div>
-        </div>
-
-        <div class="main-layout">
-            
-            <div class="left-col">
-                <div class="widget-section">
-                    <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-full-renew&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no"></iframe>
-                </div>
-
-                <div class="grid-buttons">
-                    <a href="https://www.faceit.com/en/players/R3F1_/cs2/history" target="_blank" class="btn btn-faceit">
-                        <i class="fa-solid fa-trophy"></i>
-                        <div><span class="btn-title">FACEIT</span><span class="btn-desc">Historia gier</span></div>
-                    </a>
-                    <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam">
-                        <i class="fa-brands fa-steam"></i>
-                        <div><span class="btn-title">Steam</span><span class="btn-desc">Profil główny</span></div>
-                    </a>
-                    <a href="https://www.tiktok.com/@x_refi_x" target="_blank" class="btn btn-tiktok">
-                        <i class="fa-brands fa-tiktok"></i>
-                        <div><span class="btn-title">TikTok</span><span class="btn-desc">@x_refi_x</span></div>
-                    </a>
-                    <a href="https://www.twitch.tv/refi_" target="_blank" class="btn btn-twitch">
-                        <i class="fa-brands fa-twitch"></i>
-                        <div><span class="btn-title">Twitch</span><span class="btn-desc">refi_</span></div>
-                    </a>
-                    <a href="https://dmarket.com/" target="_blank" class="btn">
-                        <img src="Dmarket.png" class="btn-img" alt="D" onerror="this.style.display='none'">
-                        <div><span class="btn-title">DMarket</span><span class="btn-desc">Ekwipunek</span></div>
-                    </a>
-                    <a href="ts3server://4gamers.gclan.pl" class="btn">
-                        <i class="fa-solid fa-headset"></i>
-                        <div><span class="btn-title">TeamSpeak 3</span><span class="btn-desc">4gamers.gclan.pl</span></div>
-                    </a>
+        <div class="left-side">
+            <div class="header-section">
+                <h1>REFI DASHBOARD</h1>
+                <div class="info-pills">
+                    <div class="pill"><i class="fa-solid fa-clock"></i> <span id="time">00:00</span></div>
+                    <div class="pill"><i class="fa-solid fa-calendar-days"></i> <span id="date">Data</span></div>
                 </div>
             </div>
 
-            <div class="right-col">
-                <div class="yt-section">
-                    <h3><i class="fa-brands fa-youtube"></i> Muzyka do gry</h3>
-                    <div class="yt-container">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=PL4fGSI1pDJn6jWnvWbc6Lze768V9fS-o8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    </div>
-                </div>
+            <div class="widget-section">
+                <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-full-renew&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no"></iframe>
             </div>
 
+            <div class="btn-grid">
+                <a href="https://www.faceit.com/en/players/R3F1_/cs2/history" target="_blank" class="btn">
+                    <i class="fa-solid fa-trophy" style="color: #ff5500;"></i>
+                    <div class="btn-label"><span class="btn-title">Historia FACEIT</span><span class="btn-desc">Ostatnie mecze</span></div>
+                </a>
+                <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn">
+                    <i class="fa-brands fa-steam" style="color: #66c0f4;"></i>
+                    <div class="btn-label"><span class="btn-title">Steam Profil</span><span class="btn-desc">Główne konto</span></div>
+                </a>
+                <a href="https://dmarket.com/" target="_blank" class="btn">
+                    <img src="Dmarket.png" class="btn-img" alt="D" onerror="this.style.display='none'">
+                    <div class="btn-label"><span class="btn-title">DMarket</span><span class="btn-desc">Rynek skinów</span></div>
+                </a>
+                <a href="https://csfloat.com/" target="_blank" class="btn">
+                    <img src="csfloat.png" class="btn-img" alt="F" onerror="this.style.display='none'">
+                    <div class="btn-label"><span class="btn-title">CSFloat</span><span class="btn-desc">Baza danych</span></div>
+                </a>
+                <a href="https://www.tiktok.com/@x_refi_x" target="_blank" class="btn">
+                    <i class="fa-brands fa-tiktok"></i>
+                    <div class="btn-label"><span class="btn-title">TikTok</span><span class="btn-desc">@x_refi_x</span></div>
+                </a>
+                <a href="https://www.twitch.tv/refi_" target="_blank" class="btn">
+                    <i class="fa-brands fa-twitch" style="color: #9146ff;"></i>
+                    <div class="btn-label"><span class="btn-title">Twitch</span><span class="btn-desc">Live stream</span></div>
+                </a>
+                <a href="ts3server://4gamers.gclan.pl" class="btn" style="grid-column: span 2;">
+                    <i class="fa-solid fa-headset" style="color: #0088cc;"></i>
+                    <div class="btn-label"><span class="btn-title">TeamSpeak 3</span><span class="btn-desc">4gamers.gclan.pl</span></div>
+                </a>
+            </div>
         </div>
+
+        <div class="media-section">
+            <div class="media-header">
+                <i class="fa-brands fa-youtube"></i> MUZYKA DO GRY / PLAYLISTA
+            </div>
+            <div class="yt-wrapper">
+                <iframe src="https://www.youtube.com/embed/videoseries?list=PL4fGSI1pDJn6jWnvWbc6Lze768V9fS-o8" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        function update() {
+        function updateClock() {
             const now = new Date();
-            document.getElementById('clock').textContent = now.toLocaleTimeString('pl-PL', {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('time').textContent = now.toLocaleTimeString('pl-PL', {hour: '2-digit', minute:'2-digit'});
             document.getElementById('date').textContent = now.toLocaleDateString('pl-PL', {day: 'numeric', month: 'long'});
         }
-        setInterval(update, 1000);
-        update();
+        setInterval(updateClock, 1000);
+        updateClock();
     </script>
+
 </body>
 </html>
