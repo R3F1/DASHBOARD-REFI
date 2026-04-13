@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Zmienne kolorystyczne - ułatwiają edycję */
         :root {
             --bg-color: #0b0f19;
             --panel-bg: #151b2b;
@@ -19,7 +18,6 @@
             --accent-glow: rgba(255, 85, 0, 0.2);
         }
 
-        /* Reset i ustawienia podstawowe */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -38,7 +36,6 @@
             padding: 20px;
         }
 
-        /* Główny kontener dashboardu */
         .dashboard {
             background-color: var(--panel-bg);
             padding: 40px;
@@ -49,10 +46,22 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Nagłówek */
+        /* Nowy wygląd nagłówka z logo */
         .header {
             text-align: center;
             margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header img {
+            width: 140px;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 50%; /* Robi z logo okrąg */
+            box-shadow: 0 0 25px rgba(255, 85, 0, 0.4); /* Pomarańczowa poświata */
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .header h1 {
@@ -64,7 +73,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Sekcja Widgetu Faceit */
         .widget-section {
             margin-bottom: 30px;
             border-radius: 12px;
@@ -77,18 +85,16 @@
 
         .widget-section iframe {
             width: 100%;
-            height: 250px; /* Dostosuj w razie potrzeby */
+            height: 250px;
             border: none;
         }
 
-        /* Siatka przycisków */
         .btn-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
 
-        /* Główne style przycisków */
         .btn {
             display: flex;
             flex-direction: column;
@@ -110,13 +116,11 @@
             margin-bottom: 8px;
         }
 
-        /* Efekty najechania (Hover) */
         .btn:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
-        /* Kolory specyficzne dla platform */
         .btn-faceit {
             background-color: #2b1308;
             border: 1px solid var(--faceit-color);
@@ -174,7 +178,6 @@
             font-weight: normal;
         }
 
-        /* Responsywność dla telefonów */
         @media (max-width: 500px) {
             .btn-grid {
                 grid-template-columns: 1fr;
@@ -189,6 +192,7 @@
 
     <div class="dashboard">
         <div class="header">
+            <img src="logo.png" alt="Logo REFI">
             <h1>REFIs Dashboard</h1>
         </div>
 
@@ -197,7 +201,6 @@
         </div>
 
         <div class="btn-grid">
-            
             <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam">
                 <i class="fa-brands fa-steam"></i>
                 Profil Steam
@@ -220,7 +223,6 @@
                     <span class="ts-address">4gamers.gclan.pl</span>
                 </div>
             </a>
-
         </div>
     </div>
 
