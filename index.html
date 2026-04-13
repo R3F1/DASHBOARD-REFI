@@ -3,33 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REFI DASHBOARD - ULTIMATE PLUS</title>
+    <title>REFI DASHBOARD - WIDE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            /* Kolory panelu i szkła */
-            --panel-bg: rgba(10, 14, 20, 0.5); 
+            --panel-bg: rgba(10, 15, 20, 0.5);
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
             --text-muted: #a1a9b5;
-            
-            /* NEONOWE KOLORY GLOW */
             --faceit-glow: #ff5500;
             --steam-glow: #66c0f4;
             --dmarket-glow: #00d381;
             --csfloat-glow: #ff3366;
-            --ts-glow: #0088cc;
-            --tiktok-glow: #ff0050; /* TikTok Neon Red */
-            --twitch-glow: #9146FF; /* Twitch Purple */
+            --tiktok-glow: #ff0050;
+            --twitch-glow: #9146FF;
+            --yt-glow: #ff0000;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
 
         body {
             color: var(--text-main);
@@ -37,350 +29,222 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 40px 20px;
-            overflow-x: hidden;
+            padding: 20px;
             background-color: #05070a;
+            overflow-x: hidden;
         }
 
-        /* --- PRELOADER --- */
-        #preloader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #05070a;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.6s ease;
-        }
-        .loader-content { text-align: center; }
-        .loader-logo { width: 80px; animation: pulse 1.5s infinite alternate; filter: drop-shadow(0 0 15px #fff); }
-        @keyframes pulse { from { transform: scale(0.9); opacity: 0.6; } to { transform: scale(1.1); opacity: 1; } }
-
-        /* --- ANIMOWANE TŁO CS2 --- */
+        /* TŁO DYMNE */
         .background-fx {
             position: fixed;
             top: -10%; left: -10%; width: 120%; height: 120%;
-            background: 
-                radial-gradient(circle at 50% 50%, rgba(15, 20, 25, 0.8) 0%, #05070a 80%),
-                url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/nuke_01.jpg'); 
+            background: radial-gradient(circle at 50% 50%, rgba(15, 25, 35, 0.7) 0%, #05070a 80%),
+                        url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/nuke_01.jpg');
             background-size: cover;
-            background-position: center;
             z-index: -2;
             animation: smokeMove 40s infinite alternate ease-in-out;
-            filter: brightness(0.35) contrast(1.2);
+            filter: brightness(0.4);
         }
-        @keyframes smokeMove { from { transform: translate(0, 0) scale(1); } to { transform: translate(-2%, -2%) scale(1.05); } }
+        @keyframes smokeMove { from { transform: scale(1); } to { transform: scale(1.1) rotate(1deg); } }
 
-        /* --- GŁÓWNY PANEL (GLASSMORPHISM) --- */
+        /* KONTENER GŁÓWNY */
         .dashboard-container {
-            background-color: var(--panel-bg);
+            background: var(--panel-bg);
+            width: 95%;
+            max-width: 1100px; /* SZEROKI UKŁAD */
             padding: 40px;
-            border-radius: 28px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), inset 0 0 0 1px var(--glass-border);
-            width: 100%;
-            max-width: 680px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            position: relative;
-            z-index: 1;
-            animation: slideIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s both;
-        }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- NAGŁÓWEK --- */
-        .dashboard-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .header-logo {
-            width: 130px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
-        }
-        .dashboard-header h1 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 7px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ffffff, #8b92a5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-        }
-
-        .info-bar {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .glass-pill {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 18px;
-            border-radius: 40px;
+            border-radius: 30px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
-            font-size: 0.9rem;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.7);
+            position: relative;
+        }
+
+        /* LOGO W PRAWYM GÓRNYM ROGU */
+        .top-branding {
+            position: absolute;
+            top: 30px;
+            right: 40px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
-        #clock-time { font-weight: 800; color: #fff; }
-
-        /* --- WIDŻET FACEIT (NAPRAWIONY) --- */
-        .widget-section {
-            margin-bottom: 30px;
-            background: #090b0f;
-            border-radius: 16px;
-            padding: 15px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .widget-section iframe {
-            width: 100%;
-            height: 170px; /* Zwiększona wysokość, żeby nie ucinało */
-            border: none;
-            display: block;
+        .header-logo {
+            width: 50px;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
         }
 
-        /* --- SIATKA PRZYCISKÓW --- */
-        .section-label {
-            font-size: 0.75rem;
+        /* NAGŁÓWEK */
+        .dashboard-header {
+            margin-bottom: 40px;
+        }
+        .dashboard-header h1 {
+            font-size: 2rem;
+            letter-spacing: 8px;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            display: block;
-            border-left: 3px solid var(--glass-border);
-            padding-left: 10px;
+            font-weight: 900;
+            opacity: 0.9;
+        }
+        .info-bar { display: flex; gap: 15px; margin-top: 10px; }
+        .glass-pill {
+            background: rgba(255,255,255,0.05);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid var(--glass-border);
         }
 
-        .dashboard-grid {
+        /* GŁÓWNY UKŁAD (LEWO / PRAWO) */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr; /* Lewa strona szersza na staty i przyciski */
+            gap: 30px;
+        }
+
+        /* WIDGET FACEIT */
+        .widget-section {
+            background: #090b0f;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 25px;
+        }
+        .widget-section iframe { width: 100%; height: 170px; border: none; }
+
+        /* PRZYCISKI W SIATCE */
+        .grid-buttons {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 15px;
         }
 
         .btn {
             display: flex;
             align-items: center;
-            padding: 16px 20px;
-            border-radius: 16px;
-            text-decoration: none;
-            color: var(--text-main);
-            background: rgba(255, 255, 255, 0.02);
+            padding: 18px;
+            background: rgba(255,255,255,0.03);
             border: 1px solid var(--glass-border);
-            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            gap: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn:hover {
-            transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Neonowa linia z boku */
-        .btn::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 20%; height: 60%; width: 3px;
-            border-radius: 0 4px 4px 0;
-            background: var(--text-muted);
+            border-radius: 15px;
+            text-decoration: none;
+            color: #fff;
             transition: 0.3s;
+            gap: 15px;
         }
-
-        .btn-icon { font-size: 1.5rem; color: var(--text-muted); transition: 0.3s; width: 30px; text-align: center; }
-        .btn-img-icon { height: 26px; width: auto; filter: grayscale(100%) brightness(1.2); transition: 0.3s; }
-        .btn-title { font-weight: 800; font-size: 1rem; display: block; }
+        .btn:hover { transform: translateY(-5px); background: rgba(255,255,255,0.07); }
+        .btn i { font-size: 1.4rem; color: var(--text-muted); width: 25px; text-align: center; }
+        .btn-img { height: 24px; filter: grayscale(1); transition: 0.3s; }
+        .btn:hover .btn-img { filter: grayscale(0); }
+        .btn-title { font-weight: 700; font-size: 0.95rem; display: block; }
         .btn-desc { font-size: 0.75rem; color: var(--text-muted); }
 
-        /* SPECYFICZNE KOLORY GLOW */
-        .btn-history { grid-column: span 2; justify-content: center; }
-        .btn-faceit-glow::before { background: var(--faceit-glow); }
-        .btn-faceit-glow:hover { box-shadow: 0 0 20px rgba(255, 85, 0, 0.2); }
-        .btn-faceit-glow:hover .btn-icon { color: var(--faceit-glow); }
+        /* KOLORY GLOW */
+        .btn-faceit:hover { box-shadow: 0 5px 20px rgba(255, 85, 0, 0.2); border-color: var(--faceit-glow); }
+        .btn-steam:hover { box-shadow: 0 5px 20px rgba(102, 192, 244, 0.2); border-color: var(--steam-glow); }
+        .btn-tiktok:hover { box-shadow: 0 5px 20px rgba(255, 0, 80, 0.2); border-color: var(--tiktok-glow); }
+        .btn-twitch:hover { box-shadow: 0 5px 20px rgba(145, 70, 255, 0.2); border-color: var(--twitch-glow); }
 
-        .btn-steam-glow::before { background: var(--steam-glow); }
-        .btn-steam-glow:hover { box-shadow: 0 0 20px rgba(102, 192, 244, 0.2); }
-        .btn-steam-glow:hover .btn-icon { color: var(--steam-glow); }
-
-        .btn-dmarket-glow::before { background: var(--dmarket-glow); }
-        .btn-dmarket-glow:hover { box-shadow: 0 0 20px rgba(0, 211, 129, 0.2); }
-        .btn-dmarket-glow:hover .btn-img-icon { filter: grayscale(0%) brightness(1); }
-
-        .btn-csfloat-glow::before { background: var(--csfloat-glow); }
-        .btn-csfloat-glow:hover { box-shadow: 0 0 20px rgba(255, 51, 102, 0.2); }
-        .btn-csfloat-glow:hover .btn-img-icon { filter: grayscale(0%) brightness(1); }
-
-        .btn-tiktok-glow::before { background: var(--tiktok-glow); }
-        .btn-tiktok-glow:hover { box-shadow: 0 0 20px rgba(255, 0, 80, 0.25); }
-        .btn-tiktok-glow:hover .btn-icon { color: var(--tiktok-glow); }
-
-        .btn-twitch-glow::before { background: var(--twitch-glow); }
-        .btn-twitch-glow:hover { box-shadow: 0 0 20px rgba(145, 70, 255, 0.25); }
-        .btn-twitch-glow:hover .btn-icon { color: var(--twitch-glow); }
-
-        /* TeamSpeak poziomy */
-        .btn-ts { grid-column: span 2; border-bottom: 2px solid var(--ts-glow); border-left: none; }
-        .btn-ts::before { display: none; }
-        .btn-ts:hover { box-shadow: 0 0 25px rgba(0, 136, 204, 0.2); }
-        .btn-ts i { font-size: 2rem; color: var(--ts-glow); }
-
-        /* Spotify */
-        .spotify-frame {
+        /* YOUTUBE PLAYER */
+        .yt-section {
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .yt-section h3 { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 15px; letter-spacing: 2px; }
+        .yt-container {
+            flex-grow: 1;
             border-radius: 12px;
             overflow: hidden;
-            border: 1px solid var(--glass-border);
-            margin-top: 10px;
+            aspect-ratio: 16/9;
+            border: 1px solid rgba(255,0,0,0.2);
         }
 
-        @media (max-width: 550px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .btn-history, .btn-ts { grid-column: span 1; }
-            .dashboard-container { padding: 25px; }
+        @media (max-width: 900px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .top-branding { position: static; margin-bottom: 20px; justify-content: center; }
+            .dashboard-header { text-align: center; }
+            .info-bar { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <div id="preloader">
-        <div class="loader-content">
-            <img src="LOGO.png" alt="REFI" class="loader-logo" onerror="this.style.display='none'">
-        </div>
-    </div>
-
     <div class="background-fx"></div>
 
     <div class="dashboard-container">
         
+        <div class="top-branding">
+            <img src="LOGO.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+        </div>
+
         <div class="dashboard-header">
-            <img src="LOGO.png" alt="Logo REFI" class="header-logo" onerror="this.style.display='none'">
             <h1>REFI DASHBOARD</h1>
             <div class="info-bar">
-                <div class="glass-pill">
-                    <i class="fa-solid fa-sun" id="greet-icon"></i>
-                    <span id="greet-text">Witaj</span>
-                </div>
-                <div class="glass-pill">
-                    <i class="fa-regular fa-clock"></i>
-                    <span id="clock-time">00:00:00</span>
-                </div>
+                <div class="glass-pill"><i class="fa-solid fa-clock"></i> <span id="clock">00:00</span></div>
+                <div class="glass-pill"><i class="fa-solid fa-calendar"></i> <span id="date">Data</span></div>
             </div>
         </div>
 
-        <div class="widget-section">
-            <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-full-renew&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no"></iframe>
+        <div class="main-layout">
+            
+            <div class="left-col">
+                <div class="widget-section">
+                    <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-full-renew&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no"></iframe>
+                </div>
+
+                <div class="grid-buttons">
+                    <a href="https://www.faceit.com/en/players/R3F1_/cs2/history" target="_blank" class="btn btn-faceit">
+                        <i class="fa-solid fa-trophy"></i>
+                        <div><span class="btn-title">FACEIT</span><span class="btn-desc">Historia gier</span></div>
+                    </a>
+                    <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam">
+                        <i class="fa-brands fa-steam"></i>
+                        <div><span class="btn-title">Steam</span><span class="btn-desc">Profil główny</span></div>
+                    </a>
+                    <a href="https://www.tiktok.com/@x_refi_x" target="_blank" class="btn btn-tiktok">
+                        <i class="fa-brands fa-tiktok"></i>
+                        <div><span class="btn-title">TikTok</span><span class="btn-desc">@x_refi_x</span></div>
+                    </a>
+                    <a href="https://www.twitch.tv/refi_" target="_blank" class="btn btn-twitch">
+                        <i class="fa-brands fa-twitch"></i>
+                        <div><span class="btn-title">Twitch</span><span class="btn-desc">refi_</span></div>
+                    </a>
+                    <a href="https://dmarket.com/" target="_blank" class="btn">
+                        <img src="Dmarket.png" class="btn-img" alt="D" onerror="this.style.display='none'">
+                        <div><span class="btn-title">DMarket</span><span class="btn-desc">Ekwipunek</span></div>
+                    </a>
+                    <a href="ts3server://4gamers.gclan.pl" class="btn">
+                        <i class="fa-solid fa-headset"></i>
+                        <div><span class="btn-title">TeamSpeak 3</span><span class="btn-desc">4gamers.gclan.pl</span></div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="right-col">
+                <div class="yt-section">
+                    <h3><i class="fa-brands fa-youtube"></i> Muzyka do gry</h3>
+                    <div class="yt-container">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=PL4fGSI1pDJn6jWnvWbc6Lze768V9fS-o8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-        <span class="section-label">Główne platformy</span>
-        <div class="dashboard-grid">
-            <a href="https://www.faceit.com/en/players/R3F1_/cs2/history" target="_blank" class="btn btn-history btn-faceit-glow">
-                <i class="fa-solid fa-trophy btn-icon"></i>
-                <div class="btn-info">
-                    <span class="btn-title">Historia FACEIT</span>
-                    <span class="btn-desc">Ostatnie mecze i statystyki</span>
-                </div>
-            </a>
-
-            <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam-glow">
-                <i class="fa-brands fa-steam btn-icon"></i>
-                <div class="btn-info">
-                    <span class="btn-title">Profil Steam</span>
-                    <span class="btn-desc">Główny profil</span>
-                </div>
-            </a>
-
-            <a href="https://steamcommunity.com/id/REFIs/inventory" target="_blank" class="btn btn-steam-glow">
-                <i class="fa-solid fa-box-open btn-icon"></i>
-                <div class="btn-info">
-                    <span class="btn-title">Ekwipunek</span>
-                    <span class="btn-desc">Skiny i kosy</span>
-                </div>
-            </a>
-        </div>
-
-        <span class="section-label">Trade & Social</span>
-        <div class="dashboard-grid">
-            <a href="https://dmarket.com/" target="_blank" class="btn btn-dmarket-glow">
-                <img src="Dmarket.png" alt="D" class="btn-img-icon" onerror="this.style.display='none'">
-                <div class="btn-info">
-                    <span class="btn-title">DMarket</span>
-                    <span class="btn-desc">Rynek skinów</span>
-                </div>
-            </a>
-
-            <a href="https://csfloat.com/" target="_blank" class="btn btn-csfloat-glow">
-                <img src="csfloat.png" alt="F" class="btn-img-icon" onerror="this.style.display='none'">
-                <div class="btn-info">
-                    <span class="btn-title">CSFloat</span>
-                    <span class="btn-desc">Baza danych</span>
-                </div>
-            </a>
-
-            <a href="https://www.tiktok.com/@x_refi_x" target="_blank" class="btn btn-tiktok-glow">
-                <i class="fa-brands fa-tiktok btn-icon"></i>
-                <div class="btn-info">
-                    <span class="btn-title">TikTok</span>
-                    <span class="btn-desc">@x_refi_x</span>
-                </div>
-            </a>
-
-            <a href="https://www.twitch.tv/refi_" target="_blank" class="btn btn-twitch-glow">
-                <i class="fa-brands fa-twitch btn-icon"></i>
-                <div class="btn-info">
-                    <span class="btn-title">Twitch</span>
-                    <span class="btn-desc">Streamy na żywo</span>
-                </div>
-            </a>
-
-            <a href="ts3server://4gamers.gclan.pl" class="btn btn-ts">
-                <i class="fa-brands fa-teamspeak"></i>
-                <div class="btn-info">
-                    <span class="btn-title">TeamSpeak 3</span>
-                    <span class="btn-desc">4gamers.gclan.pl</span>
-                </div>
-            </a>
-        </div>
-
-        <span class="section-label">Music for Grind</span>
-        <div class="spotify-frame">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4Y4RhrZqHSv?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-
     </div>
 
     <script>
-        // Preloader
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('preloader').style.opacity = '0';
-                setTimeout(() => document.getElementById('preloader').style.display = 'none', 600);
-            }, 1000);
-        });
-
-        // Zegar i Powitanie
-        function updateAll() {
+        function update() {
             const now = new Date();
-            const hour = now.getHours();
-            
-            // Zegar
-            document.getElementById('clock-time').textContent = now.toLocaleTimeString('pl-PL');
-
-            // Powitanie
-            let greet = "Witaj, REFI";
-            let icon = "fa-moon";
-            if(hour >= 5 && hour < 12) { greet = "Dzień dobry"; icon = "fa-sun"; }
-            else if(hour >= 12 && hour < 18) { greet = "Dobrego popołudnia"; icon = "fa-cloud-sun"; }
-            
-            document.getElementById('greet-text').textContent = greet;
-            document.getElementById('greet-icon').className = `fa-solid ${icon}`;
+            document.getElementById('clock').textContent = now.toLocaleTimeString('pl-PL', {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('date').textContent = now.toLocaleDateString('pl-PL', {day: 'numeric', month: 'long'});
         }
-        setInterval(updateAll, 1000);
-        updateAll();
+        setInterval(update, 1000);
+        update();
     </script>
 </body>
 </html>
