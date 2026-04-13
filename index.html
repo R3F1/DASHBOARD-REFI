@@ -19,7 +19,7 @@
             --steam-glow: #66c0f4;
             --dmarket-glow: #00d381;
             --csfloat-glow: #ff3366;
-            --ts-glow: #0088cc; /* Zmieniony z pomarańczowego na niebieski TS3 */
+            --ts-glow: #0088cc;
         }
 
         * {
@@ -49,7 +49,7 @@
             height: 200%;
             background: 
                 radial-gradient(circle at 50% 50%, rgba(30, 40, 50, 0.8) 0%, #05070a 60%),
-                url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/nuke_01.jpg'); /* Ciemne tło Nuke z CS2 */
+                url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/nuke_01.jpg'); 
             background-size: cover;
             background-position: center;
             background-blend-mode: overlay;
@@ -71,7 +71,7 @@
             /* Cień rzucany przez całą taflę szkła */
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 0 0 1px var(--glass-border);
             width: 100%;
-            max-width: 650px; /* Nieco szerszy, żeby wszystko oddychało */
+            max-width: 650px;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             position: relative;
@@ -113,7 +113,6 @@
             text-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
-        /* Zegar jako 'wypukły' element na szkle */
         .clock-container {
             background: rgba(0, 0, 0, 0.3);
             display: inline-block;
@@ -131,18 +130,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* TWARDY czarny panel, żeby statystyki były czytelne i się nie ucinały */
             background-color: #0c0e12; 
             border-radius: 12px;
             border: 1px solid var(--glass-border);
-            padding: 15px; /* Dodany margines wewnętrzny */
+            padding: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .widget-section iframe {
             width: 100%;
             max-width: 450px;
-            height: 125px; /* Idealnie dopasowana wysokość */
+            /* ZWIĘKSZONA WYSOKOŚĆ - teraz nie ucina statystyk! */
+            height: 170px; 
             border: none;
         }
 
@@ -153,7 +152,6 @@
             gap: 15px;
         }
 
-        /* Główne Style Przycisku */
         .btn {
             display: flex;
             flex-direction: column;
@@ -166,12 +164,11 @@
             font-size: 1rem;
             text-align: center;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            background: rgba(255, 255, 255, 0.02); /* Prawie niewidoczne tło */
+            background: rgba(255, 255, 255, 0.02); 
             border: 1px solid var(--glass-border);
             position: relative;
         }
 
-        /* Akcent kolorystyczny na dole przycisku */
         .btn::after {
             content: '';
             position: absolute;
@@ -203,7 +200,7 @@
             width: auto;
             margin-bottom: 8px;
             transition: transform 0.3s ease, filter 0.3s ease;
-            filter: grayscale(80%) brightness(1.2); /* Wyciszone obrazki domyślnie */
+            filter: grayscale(80%) brightness(1.2);
         }
         
         .btn-text { display: flex; flex-direction: column; }
@@ -212,49 +209,29 @@
 
         /* --- EFEKTY GLOW DLA KONKRETNYCH PRZYCISKÓW --- */
         
-        /* FACEIT (Główny i Historia) */
         .btn-faceit-style::after { background: var(--faceit-glow); }
         .btn-faceit-style:hover { box-shadow: 0 10px 25px rgba(255, 85, 0, 0.3); }
         .btn-faceit-style:hover .btn-icon { color: var(--faceit-glow); transform: scale(1.1); }
         
-        /* Ostatnie mecze rozciągnięte */
         .btn-history { grid-column: span 2; }
 
-        /* Steam */
         .btn-steam::after { background: var(--steam-glow); }
         .btn-steam:hover { box-shadow: 0 10px 25px rgba(102, 192, 244, 0.25); }
         .btn-steam:hover .btn-icon { color: var(--steam-glow); transform: scale(1.1); }
 
-        /* DMarket */
         .btn-dmarket::after { background: var(--dmarket-glow); }
         .btn-dmarket:hover { box-shadow: 0 10px 25px rgba(0, 211, 129, 0.25); }
         .btn-dmarket:hover .btn-img-icon { filter: grayscale(0%) brightness(1); transform: scale(1.1); }
 
-        /* CSFloat */
         .btn-csfloat::after { background: var(--csfloat-glow); }
         .btn-csfloat:hover { box-shadow: 0 10px 25px rgba(255, 51, 102, 0.25); }
         .btn-csfloat:hover .btn-img-icon { filter: grayscale(0%) brightness(1); transform: scale(1.1); }
 
-        /* TeamSpeak (Rozciągnięty) */
-        .btn-ts { 
-            grid-column: span 2; 
-            flex-direction: row; 
-            justify-content: center; 
-            gap: 20px;
-            padding: 15px;
-        }
-        .btn-ts::after { background: var(--ts-glow); }
-        .btn-ts:hover { box-shadow: 0 10px 25px rgba(0, 136, 204, 0.25); }
-        .btn-ts .btn-icon { margin-bottom: 0; font-size: 2.2rem; }
-        .btn-ts:hover .btn-icon { color: var(--ts-glow); transform: scale(1.1); }
-        .btn-ts .btn-text { align-items: flex-start; }
-
-        /* RWD */
         @media (max-width: 550px) {
             .dashboard-grid { grid-template-columns: 1fr; }
-            .btn-history, .btn-ts { grid-column: span 1; }
+            .btn-history { grid-column: span 1; }
             .dashboard-container { padding: 25px; }
-            body { overflow-y: auto; } /* Pozwól na przewijanie na bardzo małych ekranach */
+            body { overflow-y: auto; }
         }
     </style>
 </head>
@@ -315,14 +292,6 @@
                 <div class="btn-text">
                     <span class="btn-title">Ekwipunek</span>
                     <span class="btn-desc">Sprawdź skrytki</span>
-                </div>
-            </a>
-
-            <a href="ts3server://4gamers.gclan.pl" class="btn btn-ts">
-                <i class="fa-brands fa-teamspeak btn-icon"></i>
-                <div class="btn-text">
-                    <span class="btn-title">Połącz z TeamSpeak</span>
-                    <span class="btn-desc">4gamers.gclan.pl</span>
                 </div>
             </a>
 
