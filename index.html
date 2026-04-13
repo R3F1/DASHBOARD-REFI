@@ -8,7 +8,7 @@
     
     <style>
         :root {
-            --panel-bg: rgba(17, 21, 32, 0.75); /* Półprzezroczyste tło dla efektu szkła */
+            --panel-bg: rgba(17, 21, 32, 0.75);
             --panel-border: rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
             --text-muted: #a3aabf;
@@ -16,6 +16,8 @@
             --steam-color: #1b2838;
             --steam-blue: #66c0f4;
             --ts-color: #255d83;
+            --dmarket-color: #00d381; /* Zielony kolor DMarket */
+            --csfloat-color: #ff3366; /* Różowo-czerwony akcent pod CSFloat */
         }
 
         * {
@@ -32,33 +34,32 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            overflow: hidden; /* Zapobiega paskom przewijania przy animacji tła */
+            overflow: hidden;
             position: relative;
         }
 
-        /* --- ANIMOWANE TŁO CS2 --- */
+        /* --- NOWE ANIMOWANE TŁO CS2 (INFERNO) --- */
         .cs2-background {
             position: absolute;
             top: -5%;
             left: -5%;
             width: 110%;
             height: 110%;
-            /* Oficjalna tapeta CS2 */
-            background: url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/social/cs2.jpg') no-repeat center center;
+            /* Nowe tło CS2 */
+            background: url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/inferno_01.jpg') no-repeat center center;
             background-size: cover;
             z-index: -2;
-            animation: slowPan 25s infinite alternate linear;
-            filter: brightness(0.4) contrast(1.2); /* Przyciemnienie, żeby dashboard był czytelny */
+            animation: slowPan 30s infinite alternate linear;
+            filter: brightness(0.35) contrast(1.1);
         }
 
-        /* Mgła/Dym - nakładka na tło */
         .smoke-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(255, 85, 0, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
+            background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
             z-index: -1;
         }
 
@@ -67,18 +68,32 @@
             100% { transform: scale(1.05) translate(-1%, -1%); }
         }
 
-        /* --- GŁÓWNY PANEL (EFEKT SZKŁA) --- */
+        /* GŁÓWNY PANEL */
         .dashboard {
             background-color: var(--panel-bg);
             padding: 35px;
             border-radius: 20px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 85, 0, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 85, 0, 0.05);
             width: 100%;
-            max-width: 550px;
+            max-width: 580px; /* Minimalnie szerszy, żeby pomieścić nowe przyciski */
             border: 1px solid var(--panel-border);
-            backdrop-filter: blur(12px); /* Efekt szkła - rozmywa tło pod panelem */
+            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            animation: slideUpFade 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            max-height: 95vh;
+            overflow-y: auto; /* Pasek przewijania w razie mniejszego ekranu */
+        }
+
+        /* Ukrywanie brzydkiego paska przewijania */
+        .dashboard::-webkit-scrollbar {
+            width: 6px;
+        }
+        .dashboard::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1); 
+        }
+        .dashboard::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2); 
+            border-radius: 10px;
         }
 
         @keyframes slideUpFade {
@@ -110,7 +125,6 @@
             padding: 8px 25px;
             border-radius: 30px;
             border: 1px solid var(--panel-border);
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
         #clock-time {
@@ -126,61 +140,54 @@
             color: var(--text-muted);
         }
 
-        /* --- IDEALNIE WYRÓWNANY WIDGET FACEIT --- */
+        /* --- NOWY, MNIEJSZY WIDGET FACEIT --- */
         .widget-section {
             margin-bottom: 25px;
-            border-radius: 12px;
-            overflow: hidden; /* Ukrywa wszystko co wystaje */
-            background-color: #121212;
-            border: 1px solid var(--panel-border);
-            position: relative;
-            height: 110px; /* Sztywna wysokość, która ucina czarne paski z góry i dołu */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Usunięte sztywne przycinanie, bo ten widget wygląda dobrze sam w sobie */
         }
 
         .widget-section iframe {
-            position: absolute;
-            top: -12px; /* Przesuwa widget w górę, ucinając górny margines */
-            left: -2%;
-            width: 104%; /* Lekki zoom na szerokość, ucinając boczne marginesy */
-            height: 140px;
+            width: 100%;
+            max-width: 450px;
+            height: 120px; /* Dostosowane do wysokości małego widgetu */
             border: none;
-            transform: scale(1.02); /* Lekkie przybliżenie */
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
         /* Siatka przycisków */
         .btn-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
         }
 
-        /* Style przycisków */
         .btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            padding: 16px;
+            gap: 10px;
+            padding: 14px;
             border-radius: 12px;
             text-decoration: none;
             color: var(--text-main);
             font-weight: 600;
             font-size: 1rem;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            position: relative;
-            overflow: hidden;
             border: 1px solid var(--panel-border);
         }
 
         .btn i {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             transition: transform 0.3s ease;
         }
 
         .btn:hover {
-            transform: translateY(-4px);
-            filter: brightness(1.2);
+            transform: translateY(-3px);
+            filter: brightness(1.15);
             border-color: rgba(255, 255, 255, 0.3);
         }
 
@@ -189,56 +196,55 @@
         }
 
         /* Kolory przycisków */
+        .btn-history {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #e64d00, #ff6600);
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+        }
+        .btn-history:hover {
+            box-shadow: 0 8px 25px rgba(255, 85, 0, 0.6);
+        }
+
+        /* Nowe markety */
+        .btn-dmarket {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            border-left: 3px solid var(--dmarket-color);
+        }
+        .btn-dmarket i { color: var(--dmarket-color); }
+
+        .btn-csfloat {
+            background: linear-gradient(135deg, #141e30, #243b55);
+            border-left: 3px solid var(--csfloat-color);
+        }
+        .btn-csfloat i { color: var(--csfloat-color); }
+
         .btn-steam {
             background: linear-gradient(135deg, var(--steam-color), #2a475e);
         }
 
         .btn-eq {
             background: linear-gradient(135deg, #2a475e, var(--steam-blue));
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .btn-faceit {
             background: linear-gradient(135deg, #1f0e06, #3a1a0a);
             border-color: rgba(255, 85, 0, 0.3);
-        }
-        
-        .btn-faceit i {
-            color: var(--faceit-color);
-        }
-
-        /* Animowany przycisk historii meczów */
-        .btn-history {
             grid-column: span 2;
-            background: linear-gradient(135deg, #e64d00, #ff6600);
-            border: none;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: pulseGlow 2s infinite alternate;
         }
-        
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 10px rgba(255, 85, 0, 0.3); }
-            100% { box-shadow: 0 0 25px rgba(255, 85, 0, 0.7); }
-        }
+        .btn-faceit i { color: var(--faceit-color); }
 
-        .btn-history:hover {
-            background: linear-gradient(135deg, #ff6600, #ff8533);
-            animation: none;
-            box-shadow: 0 10px 30px rgba(255, 85, 0, 0.8);
-        }
-
-        /* Przycisk TS3 */
         .btn-ts {
             grid-column: span 2;
             background: linear-gradient(135deg, var(--ts-color), #142f45);
             justify-content: flex-start;
-            padding-left: 25px;
+            padding-left: 20px;
         }
         
         .btn-ts i {
-            font-size: 2.2rem;
+            font-size: 2rem;
             margin-right: 15px;
             color: #5599c7;
         }
@@ -248,7 +254,7 @@
             flex-direction: column;
         }
         .ts-title {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: bold;
         }
         .ts-address {
@@ -261,7 +267,7 @@
             .btn-grid {
                 grid-template-columns: 1fr;
             }
-            .btn-history, .btn-ts {
+            .btn-history, .btn-faceit, .btn-ts {
                 grid-column: span 1;
             }
         }
@@ -282,7 +288,7 @@
         </div>
 
         <div class="widget-section">
-            <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-full-renew&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no" title="FACEIT Stats"></iframe>
+            <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-dark&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no" title="FACEIT Stats"></iframe>
         </div>
 
         <div class="btn-grid">
@@ -290,6 +296,16 @@
             <a href="https://www.faceit.com/en/players/R3F1_/cs2/history" target="_blank" class="btn btn-history">
                 <i class="fa-solid fa-crosshairs"></i>
                 Ostatnie Mecze (Historia)
+            </a>
+
+            <a href="https://dmarket.com/" target="_blank" class="btn btn-dmarket">
+                <i class="fa-solid fa-store"></i>
+                DMarket
+            </a>
+
+            <a href="https://csfloat.com/" target="_blank" class="btn btn-csfloat">
+                <i class="fa-solid fa-chart-line"></i>
+                CSFloat
             </a>
 
             <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam">
@@ -302,7 +318,7 @@
                 Ekwipunek
             </a>
 
-            <a href="https://www.faceit.com/" target="_blank" class="btn btn-faceit" style="grid-column: span 2;">
+            <a href="https://www.faceit.com/" target="_blank" class="btn btn-faceit">
                 <i class="fa-brands fa-faceit"></i>
                 Strona Główna FACEIT
             </a>
