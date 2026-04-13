@@ -16,8 +16,8 @@
             --steam-color: #1b2838;
             --steam-blue: #66c0f4;
             --ts-color: #255d83;
-            --dmarket-color: #00d381; /* Zielony kolor DMarket */
-            --csfloat-color: #ff3366; /* Różowo-czerwony akcent pod CSFloat */
+            --dmarket-color: #00d381;
+            --csfloat-color: #ff3366;
         }
 
         * {
@@ -38,14 +38,13 @@
             position: relative;
         }
 
-        /* --- NOWE ANIMOWANE TŁO CS2 (INFERNO) --- */
+        /* --- ANIMOWANE TŁO CS2 (INFERNO) --- */
         .cs2-background {
             position: absolute;
             top: -5%;
             left: -5%;
             width: 110%;
             height: 110%;
-            /* Nowe tło CS2 */
             background: url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/inferno_01.jpg') no-repeat center center;
             background-size: cover;
             z-index: -2;
@@ -75,16 +74,15 @@
             border-radius: 20px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 85, 0, 0.05);
             width: 100%;
-            max-width: 580px; /* Minimalnie szerszy, żeby pomieścić nowe przyciski */
+            max-width: 580px;
             border: 1px solid var(--panel-border);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
             max-height: 95vh;
-            overflow-y: auto; /* Pasek przewijania w razie mniejszego ekranu */
+            overflow-y: auto;
         }
 
-        /* Ukrywanie brzydkiego paska przewijania */
         .dashboard::-webkit-scrollbar {
             width: 6px;
         }
@@ -101,10 +99,21 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* Nagłówek i Zegar */
+        /* --- NAGŁÓWEK Z LOGIEM --- */
         .header {
             text-align: center;
             margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-logo {
+            width: 140px; /* Dostosuj szerokość loga */
+            height: auto;
+            margin-bottom: 10px;
+            /* Subtelna poświata dla loga */
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
         }
 
         .header h1 {
@@ -140,19 +149,18 @@
             color: var(--text-muted);
         }
 
-        /* --- NOWY, MNIEJSZY WIDGET FACEIT --- */
+        /* WIDGET FACEIT */
         .widget-section {
             margin-bottom: 25px;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Usunięte sztywne przycinanie, bo ten widget wygląda dobrze sam w sobie */
         }
 
         .widget-section iframe {
             width: 100%;
             max-width: 450px;
-            height: 120px; /* Dostosowane do wysokości małego widgetu */
+            height: 120px;
             border: none;
             border-radius: 10px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.4);
@@ -208,7 +216,6 @@
             box-shadow: 0 8px 25px rgba(255, 85, 0, 0.6);
         }
 
-        /* Nowe markety */
         .btn-dmarket {
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             border-left: 3px solid var(--dmarket-color);
@@ -280,6 +287,7 @@
 
     <div class="dashboard">
         <div class="header">
+            <img src="logo.png" alt="Logo REFI" class="header-logo">
             <h1>REFIs Dashboard</h1>
             <div class="clock-container">
                 <span id="clock-time">00:00:00</span>
