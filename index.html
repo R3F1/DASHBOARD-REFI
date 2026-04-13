@@ -3,29 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REFI DASHBOARD - CS2 Glass Edition</title>
+    <title>REFI DASHBOARD - Neon Glow Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- ZMIENNE KOLORYSTYCZNE --- */
         :root {
-            /* Nowe kolory dla przezroczystości i szkła */
-            --panel-bg: rgba(20, 25, 35, 0.4); /* Bardziej przezroczyste tło panelu */
-            --glass-blur: blur(10px); /* Efekt rozmycia szkła */
-            --panel-border: rgba(255, 255, 255, 0.08);
+            /* Prawdziwe, czyste szkło */
+            --panel-bg: rgba(15, 20, 25, 0.45); 
+            --glass-border: rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
-            --text-muted: #8b92a5;
+            --text-muted: #a1a9b5;
             
-            /* Kolory Akcentów Platform */
-            --faceit-color: #ff5500;
-            --steam-blue: #66c0f4;
-            --dmarket-accent: #00d381; /* Turkusowy z loga */
-            --csfloat-accent: #6c5ce7;  /* Fioletowy z logu */
-            --ts-orange: #ff9f43;
-            --main-glow: rgba(108, 92, 231, 0.05); /* Subtelny blask */
+            /* NEONOWE KOLORY GLOW */
+            --faceit-glow: #ff5500;
+            --steam-glow: #66c0f4;
+            --dmarket-glow: #00d381;
+            --csfloat-glow: #ff3366;
+            --ts-glow: #0088cc; /* Zmieniony z pomarańczowego na niebieski TS3 */
         }
 
-        /* --- STYLIZACJA PODSTAWOWA --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -34,185 +30,241 @@
         }
 
         body {
-            /* Nowe, mroczne, dymne tło z CS2 */
-            background: 
-                linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), /* Nakładka dla kontrastu */
-                url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/anubis_01.jpg'); /* Przykład grafiki z CS2 */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed; /* Tło się nie przewija */
             color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            overflow: hidden; /* Zapobiega przewijaniu ciała */
-            animation: backgroundFloat 30s infinite alternate ease-in-out; /* Animacja pływania tła */
+            /* Ukrywamy paski przewijania */
+            overflow: hidden; 
         }
 
-        /* Animacja pływania tła */
-        @keyframes backgroundFloat {
-            0% { background-position: center 10%; }
-            100% { background-position: center 90%; }
+        /* --- ZAAWANSOWANE, ANIMOWANE TŁO (DYM/MGŁA) --- */
+        .background-fx {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(30, 40, 50, 0.8) 0%, #05070a 60%),
+                url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/nuke_01.jpg'); /* Ciemne tło Nuke z CS2 */
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            z-index: -2;
+            animation: smokeDrift 40s infinite alternate ease-in-out;
+            filter: brightness(0.4) contrast(1.2);
         }
 
-        /* --- GŁÓWNY PANEL DASHBOARDU (GLASSMORPHISM) --- */
+        @keyframes smokeDrift {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(3deg) scale(1.1); }
+        }
+
+        /* --- GŁÓWNY PANEL (CZYSTE SZKŁO) --- */
         .dashboard-container {
             background-color: var(--panel-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            padding: 35px 40px;
+            border-radius: 24px;
+            /* Cień rzucany przez całą taflę szkła */
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 0 0 1px var(--glass-border);
             width: 100%;
-            max-width: 600px;
-            border: 1px solid var(--panel-border);
-            backdrop-filter: var(--glass-blur); /* Klucz do efektu szkła */
-            -webkit-backdrop-filter: var(--glass-blur); /* Wsparcie dla Safari */
-            animation: panelFadeIn 1s ease-out; /* Animacja wejścia */
+            max-width: 650px; /* Nieco szerszy, żeby wszystko oddychało */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: relative;
+            z-index: 1;
+            /* Animacja wejścia */
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        @keyframes panelFadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* --- NAGŁÓWEK --- */
         .dashboard-header {
             text-align: center;
             margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-logo {
+            width: 110px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
         }
 
         .dashboard-header h1 {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 800;
+            letter-spacing: 5px;
+            font-weight: 900;
             margin-bottom: 10px;
-            background: linear-gradient(90deg, #fff, #aaa);
+            background: linear-gradient(135deg, #ffffff, #a3aabf);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
-        /* Sekcja Zegara/Daty */
+        /* Zegar jako 'wypukły' element na szkle */
         .clock-container {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
-        #clock-time { font-weight: bold; color: #fff; margin-right: 8px;}
+        #clock-time { font-size: 1.1rem; font-weight: bold; color: #fff; margin-right: 10px; letter-spacing: 1px;}
+        #clock-date { font-size: 0.9rem; color: var(--text-muted); }
 
-        /* --- WIDŻET FACEIT --- */
+        /* --- NAPRAWIONY WIDŻET FACEIT --- */
         .widget-section {
             margin-bottom: 30px;
-            border-radius: 12px;
-            overflow: hidden;
-            /* Przezroczyste tło pod widżetem */
-            background-color: rgba(0, 0, 0, 0.2); 
             display: flex;
             justify-content: center;
-            border: 1px solid var(--panel-border);
+            align-items: center;
+            /* TWARDY czarny panel, żeby statystyki były czytelne i się nie ucinały */
+            background-color: #0c0e12; 
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            padding: 15px; /* Dodany margines wewnętrzny */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .widget-section iframe {
             width: 100%;
-            max-width: 480px;
-            height: 120px; /* Dostosuj w razie potrzeby */
+            max-width: 450px;
+            height: 125px; /* Idealnie dopasowana wysokość */
             border: none;
-            overflow: hidden;
         }
 
-        /* --- SIATKA PRZYCISKÓW --- */
+        /* --- SIATKA PRZYCISKÓW NEON GLOW --- */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
 
-        /* Główne Style Przycisku (Przezroczyste) */
+        /* Główne Style Przycisku */
         .btn {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px 15px;
+            padding: 16px 10px;
             border-radius: 12px;
             text-decoration: none;
             color: var(--text-main);
-            font-weight: 600;
             font-size: 1rem;
             text-align: center;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            background: rgba(255, 255, 255, 0.02); /* Prawie niewidoczne tło */
+            border: 1px solid var(--glass-border);
             position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.03);
-            /* Przezroczyste tło początkowe */
-            background-color: rgba(255, 255, 255, 0.02); 
+        }
+
+        /* Akcent kolorystyczny na dole przycisku */
+        .btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            border-radius: 3px 3px 0 0;
+            background: var(--text-muted);
+            transition: all 0.3s ease;
+            opacity: 0.5;
         }
 
         .btn:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            /* Lekko widoczne tło po najechaniu */
-            background-color: rgba(255, 255, 255, 0.05); 
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .btn-icon {
             font-size: 1.8rem;
             margin-bottom: 8px;
+            transition: transform 0.3s ease, color 0.3s ease;
+            color: var(--text-muted);
         }
         
-        /* Obsługa obrazkowych logotypów */
         .btn-img-icon {
             height: 1.8rem;
             width: auto;
             margin-bottom: 8px;
-            opacity: 0.9;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: grayscale(80%) brightness(1.2); /* Wyciszone obrazki domyślnie */
         }
         
-        .btn-text {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .btn-title { font-size: 1.1rem; }
-        .btn-desc { font-size: 0.8rem; color: var(--text-muted); font-weight: normal; margin-top: 2px;}
+        .btn-text { display: flex; flex-direction: column; }
+        .btn-title { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.5px;}
+        .btn-desc { font-size: 0.8rem; color: var(--text-muted); font-weight: normal; margin-top: 3px;}
 
-        /* --- STYLIZACJA SPECYFICZNA DLA PLATFORM --- */
+        /* --- EFEKTY GLOW DLA KONKRETNYCH PRZYCISKÓW --- */
+        
+        /* FACEIT (Główny i Historia) */
+        .btn-faceit-style::after { background: var(--faceit-glow); }
+        .btn-faceit-style:hover { box-shadow: 0 10px 25px rgba(255, 85, 0, 0.3); }
+        .btn-faceit-style:hover .btn-icon { color: var(--faceit-glow); transform: scale(1.1); }
+        
+        /* Ostatnie mecze rozciągnięte */
+        .btn-history { grid-column: span 2; }
+
         /* Steam */
-        .btn-steam { border-bottom: 3px solid var(--steam-blue); }
-        .btn-steam i { color: var(--steam-blue); }
-        .btn-steam:hover { box-shadow: 0 5px 15px rgba(102, 192, 244, 0.1); }
+        .btn-steam::after { background: var(--steam-glow); }
+        .btn-steam:hover { box-shadow: 0 10px 25px rgba(102, 192, 244, 0.25); }
+        .btn-steam:hover .btn-icon { color: var(--steam-glow); transform: scale(1.1); }
 
-        /* FACEIT */
-        .btn-faceit { border-bottom: 3px solid var(--faceit-color); }
-        .btn-faceit i { color: var(--faceit-color); }
-        .btn-faceit:hover { box-shadow: 0 5px 15px rgba(255, 85, 0, 0.1); }
+        /* DMarket */
+        .btn-dmarket::after { background: var(--dmarket-glow); }
+        .btn-dmarket:hover { box-shadow: 0 10px 25px rgba(0, 211, 129, 0.25); }
+        .btn-dmarket:hover .btn-img-icon { filter: grayscale(0%) brightness(1); transform: scale(1.1); }
 
-        /* TeamSpeak (Zaktualizowana Ikonka i Kolor) */
-        .btn-ts { border-bottom: 3px solid var(--ts-orange); }
-        .btn-ts i { color: var(--ts-orange); }
-        .btn-ts:hover { box-shadow: 0 5px 15px rgba(255, 159, 67, 0.1); }
+        /* CSFloat */
+        .btn-csfloat::after { background: var(--csfloat-glow); }
+        .btn-csfloat:hover { box-shadow: 0 10px 25px rgba(255, 51, 102, 0.25); }
+        .btn-csfloat:hover .btn-img-icon { filter: grayscale(0%) brightness(1); transform: scale(1.1); }
 
-        /* DMarket (Turkusowy z loga) */
-        .btn-dmarket { border-bottom: 3px solid var(--dmarket-accent); }
-        .btn-dmarket:hover { box-shadow: 0 5px 15px rgba(0, 211, 129, 0.1); }
+        /* TeamSpeak (Rozciągnięty) */
+        .btn-ts { 
+            grid-column: span 2; 
+            flex-direction: row; 
+            justify-content: center; 
+            gap: 20px;
+            padding: 15px;
+        }
+        .btn-ts::after { background: var(--ts-glow); }
+        .btn-ts:hover { box-shadow: 0 10px 25px rgba(0, 136, 204, 0.25); }
+        .btn-ts .btn-icon { margin-bottom: 0; font-size: 2.2rem; }
+        .btn-ts:hover .btn-icon { color: var(--ts-glow); transform: scale(1.1); }
+        .btn-ts .btn-text { align-items: flex-start; }
 
-        /* CSFloat (Fioletowy z logu) */
-        .btn-csfloat { border-bottom: 3px solid var(--csfloat-accent); }
-        .btn-csfloat:hover { box-shadow: 0 5px 15px rgba(108, 92, 231, 0.1); }
-
-        /* --- RESPONSYWNOŚĆ DLA URZĄDZEŃ MOBILNYCH --- */
-        @media (max-width: 500px) {
+        /* RWD */
+        @media (max-width: 550px) {
             .dashboard-grid { grid-template-columns: 1fr; }
+            .btn-history, .btn-ts { grid-column: span 1; }
             .dashboard-container { padding: 25px; }
-            .dashboard-header h1 { font-size: 1.8rem; }
+            body { overflow-y: auto; } /* Pozwól na przewijanie na bardzo małych ekranach */
         }
     </style>
 </head>
 <body>
 
+    <div class="background-fx"></div>
+
     <div class="dashboard-container">
         <div class="dashboard-header">
+            <img src="LOGO.png" alt="Logo REFI" class="header-logo" onerror="this.style.display='none'">
             <h1>REFI DASHBOARD</h1>
             <div class="clock-container">
                 <span id="clock-time">00:00:00</span>
@@ -226,7 +278,31 @@
 
         <div class="dashboard-grid">
             
-            <a href="URL_DO_TWOJEGO_PROFILU_STEAM" target="_blank" class="btn btn-steam">
+            <a href="https://www.faceit.com/en/players/R3F1_/cs2/history" target="_blank" class="btn btn-faceit-style btn-history">
+                <i class="fa-solid fa-crosshairs btn-icon"></i>
+                <div class="btn-text">
+                    <span class="btn-title">Ostatnie Mecze</span>
+                    <span class="btn-desc">Historia gier Faceit</span>
+                </div>
+            </a>
+
+            <a href="https://dmarket.com/" target="_blank" class="btn btn-dmarket">
+                <img src="Dmarket.png" alt="DMarket Logo" class="btn-img-icon" onerror="this.style.display='none'">
+                <div class="btn-text">
+                    <span class="btn-title">DMarket</span>
+                    <span class="btn-desc">Handluj skinami</span>
+                </div>
+            </a>
+
+            <a href="https://csfloat.com/" target="_blank" class="btn btn-csfloat">
+                <img src="csfloat.png" alt="CSFloat Logo" class="btn-img-icon" onerror="this.style.display='none'">
+                <div class="btn-text">
+                    <span class="btn-title">CSFloat</span>
+                    <span class="btn-desc">Rynek bazy danych</span>
+                </div>
+            </a>
+
+            <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam">
                 <i class="fa-brands fa-steam btn-icon"></i>
                 <div class="btn-text">
                     <span class="btn-title">Profil Steam</span>
@@ -234,7 +310,7 @@
                 </div>
             </a>
 
-            <a href="URL_DO_TWOJEGO_EKWIPUNKU_STEAM" target="_blank" class="btn btn-steam">
+            <a href="https://steamcommunity.com/id/REFIs/inventory" target="_blank" class="btn btn-steam">
                 <i class="fa-solid fa-box-open btn-icon"></i>
                 <div class="btn-text">
                     <span class="btn-title">Ekwipunek</span>
@@ -242,35 +318,11 @@
                 </div>
             </a>
 
-            <a href="URL_DO_TWOJEGO_DMARKET" target="_blank" class="btn btn-dmarket">
-                <img src="image_9.png" alt="DMarket Logo" class="btn-img-icon">
+            <a href="ts3server://4gamers.gclan.pl" class="btn btn-ts">
+                <i class="fa-brands fa-teamspeak btn-icon"></i>
                 <div class="btn-text">
-                    <span class="btn-title">DMarket</span>
-                    <span class="btn-desc">Handluj skinami</span>
-                </div>
-            </a>
-
-            <a href="URL_DO_TWOJEGO_CSFLOAT" target="_blank" class="btn btn-csfloat">
-                <img src="image_8.png" alt="CSFloat Logo" class="btn-img-icon">
-                <div class="btn-text">
-                    <span class="btn-title">CSFloat</span>
-                    <span class="btn-desc">Rynek bazy danych</span>
-                </div>
-            </a>
-
-            <a href="URL_DO_FACEIT" target="_blank" class="btn btn-faceit">
-                <i class="fa-brands fa-faceit btn-icon"></i>
-                <div class="btn-text">
-                    <span class="btn-title">FACEIT</span>
-                    <span class="btn-desc">Główna Strona</span>
-                </div>
-            </a>
-
-            <a href="ts3server://URL_TWOJEGO_TEAMSPEAK" class="btn btn-ts">
-                <i class="fa-solid fa-microphone btn-icon"></i> 
-                <div class="ts-info">
-                    <div class="btn-title">Dołącz na TS3</div>
-                    <div class="btn-desc">4gamers.gclan.pl</div>
+                    <span class="btn-title">Połącz z TeamSpeak</span>
+                    <span class="btn-desc">4gamers.gclan.pl</span>
                 </div>
             </a>
 
@@ -280,21 +332,14 @@
     <script>
         function updateClock() {
             const now = new Date();
-            
-            // Czas
             const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
             document.getElementById('clock-time').textContent = now.toLocaleTimeString('pl-PL', timeOptions);
-            
-            // Data
             const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
             let dateStr = now.toLocaleDateString('pl-PL', dateOptions);
-            // Wielka litera na początku dnia tygodnia
-            dateStr = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
-            document.getElementById('clock-date').textContent = dateStr;
+            document.getElementById('clock-date').textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
         }
-
         setInterval(updateClock, 1000);
-        updateClock(); // Pierwsze wywołanie od razu
+        updateClock();
     </script>
 
 </body>
