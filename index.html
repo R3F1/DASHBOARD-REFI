@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REFI DASHBOARD - Neon Glow Edition</title>
+    <title>REFI DASHBOARD - ULTIMATE PLUS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            /* Prawdziwe, czyste szkło */
-            --panel-bg: rgba(15, 20, 25, 0.45); 
-            --glass-border: rgba(255, 255, 255, 0.1);
+            /* Kolory panelu i szkła */
+            --panel-bg: rgba(10, 14, 20, 0.5); 
+            --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
             --text-muted: #a1a9b5;
             
@@ -20,6 +20,8 @@
             --dmarket-glow: #00d381;
             --csfloat-glow: #ff3366;
             --ts-glow: #0088cc;
+            --tiktok-glow: #ff0050; /* TikTok Neon Red */
+            --twitch-glow: #9146FF; /* Twitch Purple */
         }
 
         * {
@@ -35,281 +37,350 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
-            /* Ukrywamy paski przewijania */
-            overflow: hidden; 
+            padding: 40px 20px;
+            overflow-x: hidden;
+            background-color: #05070a;
         }
 
-        /* --- ZAAWANSOWANE, ANIMOWANE TŁO (DYM/MGŁA) --- */
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #05070a;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease;
+        }
+        .loader-content { text-align: center; }
+        .loader-logo { width: 80px; animation: pulse 1.5s infinite alternate; filter: drop-shadow(0 0 15px #fff); }
+        @keyframes pulse { from { transform: scale(0.9); opacity: 0.6; } to { transform: scale(1.1); opacity: 1; } }
+
+        /* --- ANIMOWANE TŁO CS2 --- */
         .background-fx {
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            top: -10%; left: -10%; width: 120%; height: 120%;
             background: 
-                radial-gradient(circle at 50% 50%, rgba(30, 40, 50, 0.8) 0%, #05070a 60%),
+                radial-gradient(circle at 50% 50%, rgba(15, 20, 25, 0.8) 0%, #05070a 80%),
                 url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/nuke_01.jpg'); 
             background-size: cover;
             background-position: center;
-            background-blend-mode: overlay;
             z-index: -2;
-            animation: smokeDrift 40s infinite alternate ease-in-out;
-            filter: brightness(0.4) contrast(1.2);
+            animation: smokeMove 40s infinite alternate ease-in-out;
+            filter: brightness(0.35) contrast(1.2);
         }
+        @keyframes smokeMove { from { transform: translate(0, 0) scale(1); } to { transform: translate(-2%, -2%) scale(1.05); } }
 
-        @keyframes smokeDrift {
-            0% { transform: rotate(0deg) scale(1); }
-            100% { transform: rotate(3deg) scale(1.1); }
-        }
-
-        /* --- GŁÓWNY PANEL (CZYSTE SZKŁO) --- */
+        /* --- GŁÓWNY PANEL (GLASSMORPHISM) --- */
         .dashboard-container {
             background-color: var(--panel-bg);
-            padding: 35px 40px;
-            border-radius: 24px;
-            /* Cień rzucany przez całą taflę szkła */
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 0 0 1px var(--glass-border);
+            padding: 40px;
+            border-radius: 28px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), inset 0 0 0 1px var(--glass-border);
             width: 100%;
-            max-width: 650px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            max-width: 680px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             position: relative;
             z-index: 1;
-            /* Animacja wejścia */
-            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            animation: slideIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s both;
         }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- NAGŁÓWEK --- */
         .dashboard-header {
             text-align: center;
-            margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin-bottom: 30px;
         }
-
         .header-logo {
-            width: 110px;
-            height: auto;
+            width: 130px;
             margin-bottom: 15px;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
         }
-
         .dashboard-header h1 {
-            font-size: 2.4rem;
+            font-size: 2.5rem;
             text-transform: uppercase;
-            letter-spacing: 5px;
+            letter-spacing: 7px;
             font-weight: 900;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #ffffff, #a3aabf);
+            background: linear-gradient(135deg, #ffffff, #8b92a5);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
         }
 
-        .clock-container {
-            background: rgba(0, 0, 0, 0.3);
-            display: inline-block;
-            padding: 6px 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        .info-bar {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
-        #clock-time { font-size: 1.1rem; font-weight: bold; color: #fff; margin-right: 10px; letter-spacing: 1px;}
-        #clock-date { font-size: 0.9rem; color: var(--text-muted); }
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 18px;
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #clock-time { font-weight: 800; color: #fff; }
 
-        /* --- NAPRAWIONY WIDŻET FACEIT --- */
+        /* --- WIDŻET FACEIT (NAPRAWIONY) --- */
         .widget-section {
             margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #0c0e12; 
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
+            background: #090b0f;
+            border-radius: 16px;
             padding: 15px;
+            border: 1px solid var(--glass-border);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
         .widget-section iframe {
             width: 100%;
-            max-width: 450px;
-            /* ZWIĘKSZONA WYSOKOŚĆ - teraz nie ucina statystyk! */
-            height: 170px; 
+            height: 170px; /* Zwiększona wysokość, żeby nie ucinało */
             border: none;
+            display: block;
         }
 
-        /* --- SIATKA PRZYCISKÓW NEON GLOW --- */
+        /* --- SIATKA PRZYCISKÓW --- */
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: block;
+            border-left: 3px solid var(--glass-border);
+            padding-left: 10px;
+        }
+
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 12px;
+            margin-bottom: 30px;
         }
 
         .btn {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 16px 10px;
-            border-radius: 12px;
+            padding: 16px 20px;
+            border-radius: 16px;
             text-decoration: none;
             color: var(--text-main);
-            font-size: 1rem;
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            background: rgba(255, 255, 255, 0.02); 
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--glass-border);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            gap: 15px;
             position: relative;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 10%;
-            width: 80%;
-            height: 3px;
-            border-radius: 3px 3px 0 0;
-            background: var(--text-muted);
-            transition: all 0.3s ease;
-            opacity: 0.5;
+            overflow: hidden;
         }
 
         .btn:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.06);
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .btn-icon {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            transition: transform 0.3s ease, color 0.3s ease;
-            color: var(--text-muted);
+        /* Neonowa linia z boku */
+        .btn::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 20%; height: 60%; width: 3px;
+            border-radius: 0 4px 4px 0;
+            background: var(--text-muted);
+            transition: 0.3s;
         }
-        
-        .btn-img-icon {
-            height: 1.8rem;
-            width: auto;
-            margin-bottom: 8px;
-            transition: transform 0.3s ease, filter 0.3s ease;
-            filter: grayscale(80%) brightness(1.2);
+
+        .btn-icon { font-size: 1.5rem; color: var(--text-muted); transition: 0.3s; width: 30px; text-align: center; }
+        .btn-img-icon { height: 26px; width: auto; filter: grayscale(100%) brightness(1.2); transition: 0.3s; }
+        .btn-title { font-weight: 800; font-size: 1rem; display: block; }
+        .btn-desc { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* SPECYFICZNE KOLORY GLOW */
+        .btn-history { grid-column: span 2; justify-content: center; }
+        .btn-faceit-glow::before { background: var(--faceit-glow); }
+        .btn-faceit-glow:hover { box-shadow: 0 0 20px rgba(255, 85, 0, 0.2); }
+        .btn-faceit-glow:hover .btn-icon { color: var(--faceit-glow); }
+
+        .btn-steam-glow::before { background: var(--steam-glow); }
+        .btn-steam-glow:hover { box-shadow: 0 0 20px rgba(102, 192, 244, 0.2); }
+        .btn-steam-glow:hover .btn-icon { color: var(--steam-glow); }
+
+        .btn-dmarket-glow::before { background: var(--dmarket-glow); }
+        .btn-dmarket-glow:hover { box-shadow: 0 0 20px rgba(0, 211, 129, 0.2); }
+        .btn-dmarket-glow:hover .btn-img-icon { filter: grayscale(0%) brightness(1); }
+
+        .btn-csfloat-glow::before { background: var(--csfloat-glow); }
+        .btn-csfloat-glow:hover { box-shadow: 0 0 20px rgba(255, 51, 102, 0.2); }
+        .btn-csfloat-glow:hover .btn-img-icon { filter: grayscale(0%) brightness(1); }
+
+        .btn-tiktok-glow::before { background: var(--tiktok-glow); }
+        .btn-tiktok-glow:hover { box-shadow: 0 0 20px rgba(255, 0, 80, 0.25); }
+        .btn-tiktok-glow:hover .btn-icon { color: var(--tiktok-glow); }
+
+        .btn-twitch-glow::before { background: var(--twitch-glow); }
+        .btn-twitch-glow:hover { box-shadow: 0 0 20px rgba(145, 70, 255, 0.25); }
+        .btn-twitch-glow:hover .btn-icon { color: var(--twitch-glow); }
+
+        /* TeamSpeak poziomy */
+        .btn-ts { grid-column: span 2; border-bottom: 2px solid var(--ts-glow); border-left: none; }
+        .btn-ts::before { display: none; }
+        .btn-ts:hover { box-shadow: 0 0 25px rgba(0, 136, 204, 0.2); }
+        .btn-ts i { font-size: 2rem; color: var(--ts-glow); }
+
+        /* Spotify */
+        .spotify-frame {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            margin-top: 10px;
         }
-        
-        .btn-text { display: flex; flex-direction: column; }
-        .btn-title { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.5px;}
-        .btn-desc { font-size: 0.8rem; color: var(--text-muted); font-weight: normal; margin-top: 3px;}
-
-        /* --- EFEKTY GLOW DLA KONKRETNYCH PRZYCISKÓW --- */
-        
-        .btn-faceit-style::after { background: var(--faceit-glow); }
-        .btn-faceit-style:hover { box-shadow: 0 10px 25px rgba(255, 85, 0, 0.3); }
-        .btn-faceit-style:hover .btn-icon { color: var(--faceit-glow); transform: scale(1.1); }
-        
-        .btn-history { grid-column: span 2; }
-
-        .btn-steam::after { background: var(--steam-glow); }
-        .btn-steam:hover { box-shadow: 0 10px 25px rgba(102, 192, 244, 0.25); }
-        .btn-steam:hover .btn-icon { color: var(--steam-glow); transform: scale(1.1); }
-
-        .btn-dmarket::after { background: var(--dmarket-glow); }
-        .btn-dmarket:hover { box-shadow: 0 10px 25px rgba(0, 211, 129, 0.25); }
-        .btn-dmarket:hover .btn-img-icon { filter: grayscale(0%) brightness(1); transform: scale(1.1); }
-
-        .btn-csfloat::after { background: var(--csfloat-glow); }
-        .btn-csfloat:hover { box-shadow: 0 10px 25px rgba(255, 51, 102, 0.25); }
-        .btn-csfloat:hover .btn-img-icon { filter: grayscale(0%) brightness(1); transform: scale(1.1); }
 
         @media (max-width: 550px) {
             .dashboard-grid { grid-template-columns: 1fr; }
-            .btn-history { grid-column: span 1; }
+            .btn-history, .btn-ts { grid-column: span 1; }
             .dashboard-container { padding: 25px; }
-            body { overflow-y: auto; }
         }
     </style>
 </head>
 <body>
 
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="LOGO.png" alt="REFI" class="loader-logo" onerror="this.style.display='none'">
+        </div>
+    </div>
+
     <div class="background-fx"></div>
 
     <div class="dashboard-container">
+        
         <div class="dashboard-header">
             <img src="LOGO.png" alt="Logo REFI" class="header-logo" onerror="this.style.display='none'">
             <h1>REFI DASHBOARD</h1>
-            <div class="clock-container">
-                <span id="clock-time">00:00:00</span>
-                <span id="clock-date">Data</span>
+            <div class="info-bar">
+                <div class="glass-pill">
+                    <i class="fa-solid fa-sun" id="greet-icon"></i>
+                    <span id="greet-text">Witaj</span>
+                </div>
+                <div class="glass-pill">
+                    <i class="fa-regular fa-clock"></i>
+                    <span id="clock-time">00:00:00</span>
+                </div>
             </div>
         </div>
 
         <div class="widget-section">
-            <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-full-renew&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no" title="FACEIT Stats"></iframe>
+            <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-full-renew&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no"></iframe>
         </div>
 
+        <span class="section-label">Główne platformy</span>
         <div class="dashboard-grid">
-            
-            <a href="https://www.faceit.com/en/players/R3F1_/cs2/history" target="_blank" class="btn btn-faceit-style btn-history">
-                <i class="fa-solid fa-crosshairs btn-icon"></i>
-                <div class="btn-text">
-                    <span class="btn-title">Ostatnie Mecze</span>
-                    <span class="btn-desc">Historia gier Faceit</span>
+            <a href="https://www.faceit.com/en/players/R3F1_/cs2/history" target="_blank" class="btn btn-history btn-faceit-glow">
+                <i class="fa-solid fa-trophy btn-icon"></i>
+                <div class="btn-info">
+                    <span class="btn-title">Historia FACEIT</span>
+                    <span class="btn-desc">Ostatnie mecze i statystyki</span>
                 </div>
             </a>
 
-            <a href="https://dmarket.com/" target="_blank" class="btn btn-dmarket">
-                <img src="Dmarket.png" alt="DMarket Logo" class="btn-img-icon" onerror="this.style.display='none'">
-                <div class="btn-text">
-                    <span class="btn-title">DMarket</span>
-                    <span class="btn-desc">Handluj skinami</span>
-                </div>
-            </a>
-
-            <a href="https://csfloat.com/" target="_blank" class="btn btn-csfloat">
-                <img src="csfloat.png" alt="CSFloat Logo" class="btn-img-icon" onerror="this.style.display='none'">
-                <div class="btn-text">
-                    <span class="btn-title">CSFloat</span>
-                    <span class="btn-desc">Rynek bazy danych</span>
-                </div>
-            </a>
-
-            <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam">
+            <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam-glow">
                 <i class="fa-brands fa-steam btn-icon"></i>
-                <div class="btn-text">
+                <div class="btn-info">
                     <span class="btn-title">Profil Steam</span>
-                    <span class="btn-desc">Otwórz w nowej karcie</span>
+                    <span class="btn-desc">Główny profil</span>
                 </div>
             </a>
 
-            <a href="https://steamcommunity.com/id/REFIs/inventory" target="_blank" class="btn btn-steam">
+            <a href="https://steamcommunity.com/id/REFIs/inventory" target="_blank" class="btn btn-steam-glow">
                 <i class="fa-solid fa-box-open btn-icon"></i>
-                <div class="btn-text">
+                <div class="btn-info">
                     <span class="btn-title">Ekwipunek</span>
-                    <span class="btn-desc">Sprawdź skrytki</span>
+                    <span class="btn-desc">Skiny i kosy</span>
+                </div>
+            </a>
+        </div>
+
+        <span class="section-label">Trade & Social</span>
+        <div class="dashboard-grid">
+            <a href="https://dmarket.com/" target="_blank" class="btn btn-dmarket-glow">
+                <img src="Dmarket.png" alt="D" class="btn-img-icon" onerror="this.style.display='none'">
+                <div class="btn-info">
+                    <span class="btn-title">DMarket</span>
+                    <span class="btn-desc">Rynek skinów</span>
                 </div>
             </a>
 
+            <a href="https://csfloat.com/" target="_blank" class="btn btn-csfloat-glow">
+                <img src="csfloat.png" alt="F" class="btn-img-icon" onerror="this.style.display='none'">
+                <div class="btn-info">
+                    <span class="btn-title">CSFloat</span>
+                    <span class="btn-desc">Baza danych</span>
+                </div>
+            </a>
+
+            <a href="https://www.tiktok.com/@x_refi_x" target="_blank" class="btn btn-tiktok-glow">
+                <i class="fa-brands fa-tiktok btn-icon"></i>
+                <div class="btn-info">
+                    <span class="btn-title">TikTok</span>
+                    <span class="btn-desc">@x_refi_x</span>
+                </div>
+            </a>
+
+            <a href="https://www.twitch.tv/refi_" target="_blank" class="btn btn-twitch-glow">
+                <i class="fa-brands fa-twitch btn-icon"></i>
+                <div class="btn-info">
+                    <span class="btn-title">Twitch</span>
+                    <span class="btn-desc">Streamy na żywo</span>
+                </div>
+            </a>
+
+            <a href="ts3server://4gamers.gclan.pl" class="btn btn-ts">
+                <i class="fa-brands fa-teamspeak"></i>
+                <div class="btn-info">
+                    <span class="btn-title">TeamSpeak 3</span>
+                    <span class="btn-desc">4gamers.gclan.pl</span>
+                </div>
+            </a>
         </div>
+
+        <span class="section-label">Music for Grind</span>
+        <div class="spotify-frame">
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4Y4RhrZqHSv?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+
     </div>
 
     <script>
-        function updateClock() {
-            const now = new Date();
-            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            document.getElementById('clock-time').textContent = now.toLocaleTimeString('pl-PL', timeOptions);
-            const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
-            let dateStr = now.toLocaleDateString('pl-PL', dateOptions);
-            document.getElementById('clock-date').textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-    </script>
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').style.opacity = '0';
+                setTimeout(() => document.getElementById('preloader').style.display = 'none', 600);
+            }, 1000);
+        });
 
+        // Zegar i Powitanie
+        function updateAll() {
+            const now = new Date();
+            const hour = now.getHours();
+            
+            // Zegar
+            document.getElementById('clock-time').textContent = now.toLocaleTimeString('pl-PL');
+
+            // Powitanie
+            let greet = "Witaj, REFI";
+            let icon = "fa-moon";
+            if(hour >= 5 && hour < 12) { greet = "Dzień dobry"; icon = "fa-sun"; }
+            else if(hour >= 12 && hour < 18) { greet = "Dobrego popołudnia"; icon = "fa-cloud-sun"; }
+            
+            document.getElementById('greet-text').textContent = greet;
+            document.getElementById('greet-icon').className = `fa-solid ${icon}`;
+        }
+        setInterval(updateAll, 1000);
+        updateAll();
+    </script>
 </body>
 </html>
