@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REFIs Dashboard PRO</title>
+    <title>REFIs Dashboard PRO - CS2 Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-dark: #07090f;
-            --panel-bg: #111520;
-            --panel-border: rgba(255, 255, 255, 0.08);
+            --panel-bg: rgba(17, 21, 32, 0.75); /* Półprzezroczyste tło dla efektu szkła */
+            --panel-border: rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
-            --text-muted: #8b92a5;
+            --text-muted: #a3aabf;
             --faceit-color: #ff5500;
             --steam-color: #1b2838;
             --steam-blue: #66c0f4;
@@ -27,25 +26,64 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 50% 0%, #172033 0%, var(--bg-dark) 80%);
             color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            overflow: hidden; /* Zapobiega paskom przewijania przy animacji tła */
+            position: relative;
         }
 
+        /* --- ANIMOWANE TŁO CS2 --- */
+        .cs2-background {
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            /* Oficjalna tapeta CS2 */
+            background: url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/social/cs2.jpg') no-repeat center center;
+            background-size: cover;
+            z-index: -2;
+            animation: slowPan 25s infinite alternate linear;
+            filter: brightness(0.4) contrast(1.2); /* Przyciemnienie, żeby dashboard był czytelny */
+        }
+
+        /* Mgła/Dym - nakładka na tło */
+        .smoke-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 85, 0, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
+            z-index: -1;
+        }
+
+        @keyframes slowPan {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.05) translate(-1%, -1%); }
+        }
+
+        /* --- GŁÓWNY PANEL (EFEKT SZKŁA) --- */
         .dashboard {
             background-color: var(--panel-bg);
             padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 85, 0, 0.1);
             width: 100%;
             max-width: 550px;
             border: 1px solid var(--panel-border);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px); /* Efekt szkła - rozmywa tło pod panelem */
+            -webkit-backdrop-filter: blur(12px);
+            animation: slideUpFade 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         /* Nagłówek i Zegar */
@@ -55,22 +93,24 @@
         }
 
         .header h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #fff, #8b92a5);
+            letter-spacing: 4px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #ffffff, #a3aabf);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .clock-container {
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.5);
             display: inline-block;
-            padding: 8px 20px;
-            border-radius: 20px;
+            padding: 8px 25px;
+            border-radius: 30px;
             border: 1px solid var(--panel-border);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
         #clock-time {
@@ -78,6 +118,7 @@
             font-weight: bold;
             color: #fff;
             margin-right: 10px;
+            letter-spacing: 1px;
         }
 
         #clock-date {
@@ -85,30 +126,33 @@
             color: var(--text-muted);
         }
 
-        /* Widget Faceit - POPRAWIONE WYRÓWNANIE */
+        /* --- IDEALNIE WYRÓWNANY WIDGET FACEIT --- */
         .widget-section {
             margin-bottom: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #000;
             border-radius: 12px;
+            overflow: hidden; /* Ukrywa wszystko co wystaje */
+            background-color: #121212;
             border: 1px solid var(--panel-border);
-            padding: 10px; /* Minimalny margines wewnątrz */
+            position: relative;
+            height: 110px; /* Sztywna wysokość, która ucina czarne paski z góry i dołu */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
         .widget-section iframe {
-            width: 100%;
-            max-width: 400px; /* Ograniczenie szerokości do faktycznego rozmiaru statystyk */
-            height: 120px;    /* Przycięcie czarnego tła z dołu i góry */
+            position: absolute;
+            top: -12px; /* Przesuwa widget w górę, ucinając górny margines */
+            left: -2%;
+            width: 104%; /* Lekki zoom na szerokość, ucinając boczne marginesy */
+            height: 140px;
             border: none;
+            transform: scale(1.02); /* Lekkie przybliżenie */
         }
 
         /* Siatka przycisków */
         .btn-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 15px;
         }
 
         /* Style przycisków */
@@ -118,68 +162,85 @@
             justify-content: center;
             gap: 12px;
             padding: 16px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             color: var(--text-main);
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             position: relative;
             overflow: hidden;
             border: 1px solid var(--panel-border);
         }
 
         .btn i {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.15);
+            transform: translateY(-4px);
+            filter: brightness(1.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover i {
+            transform: scale(1.1);
         }
 
         /* Kolory przycisków */
         .btn-steam {
-            background: linear-gradient(to right, var(--steam-color), #2a475e);
+            background: linear-gradient(135deg, var(--steam-color), #2a475e);
         }
 
         .btn-eq {
-            background: linear-gradient(to right, #2a475e, var(--steam-blue));
+            background: linear-gradient(135deg, #2a475e, var(--steam-blue));
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .btn-faceit {
-            background: linear-gradient(to right, #2b1308, #4a210d);
+            background: linear-gradient(135deg, #1f0e06, #3a1a0a);
             border-color: rgba(255, 85, 0, 0.3);
-            color: #fff;
         }
         
         .btn-faceit i {
             color: var(--faceit-color);
         }
 
-        /* Przycisk historii meczów (zajmuje 2 kolumny) */
+        /* Animowany przycisk historii meczów */
         .btn-history {
             grid-column: span 2;
-            background: linear-gradient(to right, var(--faceit-color), #cc4400);
+            background: linear-gradient(135deg, #e64d00, #ff6600);
             border: none;
             font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: pulseGlow 2s infinite alternate;
         }
-        .btn-history:hover {
-            box-shadow: 0 6px 20px rgba(255, 85, 0, 0.5);
+        
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px rgba(255, 85, 0, 0.3); }
+            100% { box-shadow: 0 0 25px rgba(255, 85, 0, 0.7); }
         }
 
-        /* Przycisk TS3 (zajmuje 2 kolumny) */
+        .btn-history:hover {
+            background: linear-gradient(135deg, #ff6600, #ff8533);
+            animation: none;
+            box-shadow: 0 10px 30px rgba(255, 85, 0, 0.8);
+        }
+
+        /* Przycisk TS3 */
         .btn-ts {
             grid-column: span 2;
-            background: linear-gradient(to right, var(--ts-color), #1b3d58);
+            background: linear-gradient(135deg, var(--ts-color), #142f45);
             justify-content: flex-start;
             padding-left: 25px;
         }
         
         .btn-ts i {
-            font-size: 2rem;
-            margin-right: 10px;
+            font-size: 2.2rem;
+            margin-right: 15px;
+            color: #5599c7;
         }
         
         .ts-info {
@@ -187,12 +248,12 @@
             flex-direction: column;
         }
         .ts-title {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: bold;
         }
         .ts-address {
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: #8da4b5;
             font-weight: normal;
         }
 
@@ -207,6 +268,9 @@
     </style>
 </head>
 <body>
+
+    <div class="cs2-background"></div>
+    <div class="smoke-overlay"></div>
 
     <div class="dashboard">
         <div class="header">
@@ -225,7 +289,7 @@
             
             <a href="https://www.faceit.com/en/players/R3F1_/cs2/history" target="_blank" class="btn btn-history">
                 <i class="fa-solid fa-crosshairs"></i>
-                Ostatnie Mecze (Historia CS2)
+                Ostatnie Mecze (Historia)
             </a>
 
             <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam">
@@ -258,24 +322,19 @@
         function updateClock() {
             const now = new Date();
             
-            // Formatowanie czasu (np. 14:35:09)
             const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
             const formattedTime = now.toLocaleTimeString('pl-PL', timeOptions);
             
-            // Formatowanie daty (np. Poniedziałek, 12 października)
             const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
             let formattedDate = now.toLocaleDateString('pl-PL', dateOptions);
-            
-            // Wielka litera na początku dnia tygodnia
             formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 
             document.getElementById('clock-time').textContent = formattedTime;
             document.getElementById('clock-date').textContent = formattedDate;
         }
 
-        // Uruchomienie zegara
         setInterval(updateClock, 1000);
-        updateClock(); // Wywołanie od razu, żeby nie było opóźnienia
+        updateClock();
     </script>
 
 </body>
