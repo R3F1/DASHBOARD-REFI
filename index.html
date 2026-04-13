@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REFI Dashboard</title>
+    <title>REFI DASHBOARD</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --panel-bg: rgba(17, 21, 32, 0.75);
-            --panel-border: rgba(255, 255, 255, 0.1);
+            --panel-bg: rgba(20, 24, 34, 0.85); /* Ciemniejsze, eleganckie szkło */
+            --panel-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
-            --text-muted: #a3aabf;
+            --text-muted: #9aa3af;
             --faceit-color: #ff5500;
             --steam-color: #1b2838;
             --steam-blue: #66c0f4;
@@ -33,65 +33,49 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
-            overflow: hidden;
-            position: relative;
-            background-color: #0b0f19; /* Tło zapasowe */
+            padding: 40px 20px;
+            /* Zapasowe tło w razie problemów z ładowaniem obrazka */
+            background-color: #0b0f19; 
         }
 
-        /* --- ANIMOWANE TŁO --- */
-        .cs2-background {
-            position: absolute;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
-            /* Tymczasowe, działające ciemne tło. Jeśli wgrasz swoje na githuba, zamień link na 'tlo.jpg' */
+        /* --- NAPRAWIONE TŁO (nie ucina się przy krawędziach) --- */
+        .background-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* Możesz tu wstawić swój plik, np. url('tlo.jpg') */
             background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop') no-repeat center center;
             background-size: cover;
             z-index: -2;
-            animation: slowPan 30s infinite alternate linear;
-            filter: brightness(0.3) contrast(1.2);
+            filter: brightness(0.3) contrast(1.1);
         }
 
-        .smoke-overlay {
-            position: absolute;
+        .background-overlay {
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
             z-index: -1;
         }
 
-        @keyframes slowPan {
-            0% { transform: scale(1) translate(0, 0); }
-            100% { transform: scale(1.05) translate(-1%, -1%); }
-        }
-
-        /* GŁÓWNY PANEL */
+        /* --- GŁÓWNY PANEL Z NAPRAWIONYM CIENIEM --- */
         .dashboard {
             background-color: var(--panel-bg);
             padding: 35px;
             border-radius: 20px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 85, 0, 0.05);
+            /* Zlokalizowany cień: mocny czarny dół + delikatna poświata dookoła */
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.03);
             width: 100%;
-            max-width: 580px;
+            max-width: 600px;
             border: 1px solid var(--panel-border);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-            max-height: 95vh;
-            overflow-y: auto;
-        }
-
-        .dashboard::-webkit-scrollbar { width: 6px; }
-        .dashboard::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
-        .dashboard::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
-
-        @keyframes slideUpFade {
-            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            position: relative;
+            z-index: 1;
         }
 
         /* NAGŁÓWEK Z LOGIEM */
@@ -107,7 +91,7 @@
             width: 120px;
             height: auto;
             margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.15));
         }
 
         .header h1 {
@@ -116,18 +100,19 @@
             letter-spacing: 4px;
             font-weight: 900;
             margin-bottom: 15px;
-            background: linear-gradient(90deg, #ffffff, #a3aabf);
+            background: linear-gradient(90deg, #ffffff, #8b92a5);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .clock-container {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.4);
             display: inline-block;
             padding: 8px 25px;
             border-radius: 30px;
             border: 1px solid var(--panel-border);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
         }
 
         #clock-time {
@@ -143,21 +128,22 @@
             color: var(--text-muted);
         }
 
-        /* WIDGET FACEIT */
+        /* --- NOWY WIDGET FACEIT (widget-full) --- */
         .widget-section {
             margin-bottom: 25px;
             display: flex;
             justify-content: center;
             align-items: center;
+            background: #000; /* Tło pod ramką, żeby nie było dziur */
+            border-radius: 12px;
+            border: 1px solid var(--panel-border);
+            overflow: hidden;
         }
 
         .widget-section iframe {
             width: 100%;
-            max-width: 450px;
-            height: 120px;
+            height: 250px; /* Powiększona wysokość dla wersji widget-full */
             border: none;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
         /* SIATKA PRZYCISKÓW */
@@ -169,89 +155,70 @@
 
         .btn {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 14px;
+            padding: 18px 10px;
             border-radius: 12px;
             text-decoration: none;
             color: var(--text-main);
-            font-weight: 600;
             font-size: 1rem;
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--panel-border);
         }
 
         .btn i {
-            font-size: 1.3rem;
+            font-size: 1.6rem;
+            margin-bottom: 6px;
             transition: transform 0.3s ease;
         }
 
+        /* Styl dla wgrywanych logotypów (DMarket i CSFloat) */
+        .btn-img-icon {
+            height: 32px;
+            width: auto;
+            margin-bottom: 6px;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-title { font-weight: bold; font-size: 1.05rem; }
+        .btn-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
         .btn:hover {
             transform: translateY(-3px);
-            filter: brightness(1.15);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
+        .btn:hover i, .btn:hover .btn-img-icon { transform: scale(1.1); }
 
-        .btn:hover i { transform: scale(1.1); }
+        /* KOLORY AKCENTÓW DLA PLATFORM */
+        .btn-history { grid-column: span 2; border-bottom: 3px solid var(--faceit-color); }
+        .btn-history i { color: var(--faceit-color); }
 
-        /* KOLORY PRZYCISKÓW */
-        .btn-history {
-            grid-column: span 2;
-            background: linear-gradient(135deg, #e64d00, #ff6600);
-            border: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
-        }
-        .btn-history:hover { box-shadow: 0 8px 25px rgba(255, 85, 0, 0.6); }
+        .btn-dmarket { border-bottom: 3px solid var(--dmarket-color); }
+        .btn-csfloat { border-bottom: 3px solid var(--csfloat-color); }
 
-        .btn-dmarket {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            border-left: 3px solid var(--dmarket-color);
-        }
-        .btn-dmarket i { color: var(--dmarket-color); }
+        .btn-steam { border-bottom: 3px solid var(--steam-blue); }
+        .btn-steam i { color: var(--steam-blue); }
 
-        .btn-csfloat {
-            background: linear-gradient(135deg, #141e30, #243b55);
-            border-left: 3px solid var(--csfloat-color);
-        }
-        .btn-csfloat i { color: var(--csfloat-color); }
+        .btn-eq { border-bottom: 3px solid var(--steam-color); }
 
-        .btn-steam {
-            background: linear-gradient(135deg, var(--steam-color), #2a475e);
-        }
-
-        .btn-eq {
-            background: linear-gradient(135deg, #2a475e, var(--steam-blue));
-        }
-
-        .btn-faceit {
-            background: linear-gradient(135deg, #1f0e06, #3a1a0a);
-            border-color: rgba(255, 85, 0, 0.3);
-            grid-column: span 2;
-        }
+        .btn-faceit { grid-column: span 2; border-bottom: 3px solid var(--faceit-color); }
         .btn-faceit i { color: var(--faceit-color); }
 
+        /* Przycisk TeamSpeak poziomy */
         .btn-ts {
             grid-column: span 2;
-            background: linear-gradient(135deg, var(--ts-color), #142f45);
+            flex-direction: row;
             justify-content: flex-start;
-            padding-left: 20px;
+            padding: 15px 25px;
+            border-bottom: 3px solid var(--ts-color);
         }
-        
-        .btn-ts i {
-            font-size: 2rem;
-            margin-right: 15px;
-            color: #5599c7;
-        }
-        
-        .ts-info {
-            display: flex;
-            flex-direction: column;
-        }
-        .ts-title { font-size: 1.1rem; font-weight: bold; }
-        .ts-address { font-size: 0.85rem; color: #8da4b5; font-weight: normal; }
+        .btn-ts i { font-size: 2.2rem; margin-bottom: 0; margin-right: 15px; color: #5599c7; }
+        .ts-info { display: flex; flex-direction: column; text-align: left; }
 
         @media (max-width: 500px) {
             .btn-grid { grid-template-columns: 1fr; }
@@ -261,8 +228,8 @@
 </head>
 <body>
 
-    <div class="cs2-background"></div>
-    <div class="smoke-overlay"></div>
+    <div class="background-fixed"></div>
+    <div class="background-overlay"></div>
 
     <div class="dashboard">
         <div class="header">
@@ -275,46 +242,50 @@
         </div>
 
         <div class="widget-section">
-            <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-dark&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no" title="FACEIT Stats"></iframe>
+            <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-full&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no" title="FACEIT Stats"></iframe>
         </div>
 
         <div class="btn-grid">
             
             <a href="https://www.faceit.com/en/players/R3F1_/cs2/history" target="_blank" class="btn btn-history">
                 <i class="fa-solid fa-crosshairs"></i>
-                Ostatnie Mecze (Historia)
+                <span class="btn-title">Ostatnie Mecze (Historia)</span>
             </a>
 
             <a href="https://dmarket.com/" target="_blank" class="btn btn-dmarket">
-                <i class="fa-solid fa-store"></i>
-                DMarket
+                <img src="Dmarket.png" alt="DMarket Logo" class="btn-img-icon" onerror="this.style.display='none'">
+                <span class="btn-title">DMarket</span>
+                <span class="btn-desc">Sklep ze skinami</span>
             </a>
 
             <a href="https://csfloat.com/" target="_blank" class="btn btn-csfloat">
-                <i class="fa-solid fa-chart-line"></i>
-                CSFloat
+                <img src="csfloat.png" alt="CSFloat Logo" class="btn-img-icon" onerror="this.style.display='none'">
+                <span class="btn-title">CSFloat</span>
+                <span class="btn-desc">Baza danych i rynek</span>
             </a>
 
             <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam">
                 <i class="fa-brands fa-steam"></i>
-                Profil Steam
+                <span class="btn-title">Profil Steam</span>
+                <span class="btn-desc">Otwórz profil</span>
             </a>
 
             <a href="https://steamcommunity.com/id/REFIs/inventory" target="_blank" class="btn btn-eq">
                 <i class="fa-solid fa-box-open"></i>
-                Ekwipunek
+                <span class="btn-title">Ekwipunek</span>
+                <span class="btn-desc">Sprawdź EQ</span>
             </a>
 
             <a href="https://www.faceit.com/" target="_blank" class="btn btn-faceit">
                 <i class="fa-brands fa-faceit"></i>
-                Strona Główna FACEIT
+                <span class="btn-title">Strona Główna FACEIT</span>
             </a>
 
             <a href="ts3server://4gamers.gclan.pl" class="btn btn-ts">
                 <i class="fa-brands fa-teamspeak"></i>
                 <div class="ts-info">
-                    <span class="ts-title">Połącz z TeamSpeak</span>
-                    <span class="ts-address">4gamers.gclan.pl</span>
+                    <span class="btn-title">Połącz z TeamSpeak</span>
+                    <span class="btn-desc">4gamers.gclan.pl</span>
                 </div>
             </a>
 
