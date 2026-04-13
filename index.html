@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Gracza - REFIs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Zmienne kolorystyczne - ułatwiają edycję */
+        :root {
+            --bg-color: #0b0f19;
+            --panel-bg: #151b2b;
+            --text-main: #ffffff;
+            --faceit-color: #ff5500;
+            --steam-color: #171a21;
+            --steam-blue: #66c0f4;
+            --ts-color: #255d83;
+            --accent-glow: rgba(255, 85, 0, 0.2);
+        }
+
+        /* Reset i ustawienia podstawowe */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, var(--bg-color) 70%);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Główny kontener dashboardu */
+        .dashboard {
+            background-color: var(--panel-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Nagłówek */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Sekcja Widgetu Faceit */
+        .widget-section {
+            margin-bottom: 30px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .widget-section iframe {
+            width: 100%;
+            height: 250px; /* Dostosuj w razie potrzeby */
+            border: none;
+        }
+
+        /* Siatka przycisków */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Główne style przycisków */
+        .btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn i {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        /* Efekty najechania (Hover) */
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Kolory specyficzne dla platform */
+        .btn-faceit {
+            background-color: #2b1308;
+            border: 1px solid var(--faceit-color);
+            color: var(--faceit-color);
+        }
+        .btn-faceit:hover {
+            background-color: var(--faceit-color);
+            color: #fff;
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+
+        .btn-steam {
+            background: linear-gradient(135deg, var(--steam-color), #2a475e);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-steam:hover {
+            background: linear-gradient(135deg, #2a475e, var(--steam-blue));
+        }
+
+        .btn-eq {
+            background: linear-gradient(135deg, #2a475e, var(--steam-blue));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-eq:hover {
+            filter: brightness(1.2);
+        }
+
+        .btn-ts {
+            grid-column: span 2;
+            background: linear-gradient(135deg, var(--ts-color), #1b3d58);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-direction: row;
+            gap: 15px;
+        }
+        .btn-ts i {
+            margin-bottom: 0;
+            font-size: 2.2rem;
+        }
+        .btn-ts:hover {
+            background: linear-gradient(135deg, #2d73a3, var(--ts-color));
+        }
+        
+        .ts-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .ts-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .ts-address {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+
+        /* Responsywność dla telefonów */
+        @media (max-width: 500px) {
+            .btn-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-ts {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <div class="header">
+            <h1>REFIs Dashboard</h1>
+        </div>
+
+        <div class="widget-section">
+            <iframe src="https://strugly.com/inc/widget.php?widget_type=widget-full-renew&player=e07d12cd-82c7-4d03-b1eb-4a3f0eec2724&secret=b744818a49a7703d18108d2d39fbc29d" scrolling="no" title="FACEIT Stats Widget"></iframe>
+        </div>
+
+        <div class="btn-grid">
+            
+            <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="btn btn-steam">
+                <i class="fa-brands fa-steam"></i>
+                Profil Steam
+            </a>
+
+            <a href="https://steamcommunity.com/id/REFIs/inventory" target="_blank" class="btn btn-eq">
+                <i class="fa-solid fa-box-open"></i>
+                Ekwipunek
+            </a>
+
+            <a href="https://www.faceit.com/" target="_blank" class="btn btn-faceit" style="grid-column: span 2;">
+                <i class="fa-brands fa-faceit"></i>
+                Strona Główna FACEIT
+            </a>
+
+            <a href="ts3server://4gamers.gclan.pl" class="btn btn-ts">
+                <i class="fa-brands fa-teamspeak"></i>
+                <div class="ts-info">
+                    <span class="ts-title">Dołącz na TeamSpeak</span>
+                    <span class="ts-address">4gamers.gclan.pl</span>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>
