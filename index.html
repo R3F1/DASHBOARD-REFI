@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REFI PLATFORM - Pro Dashboard</title>
+    <title>REFI PLATFORM - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-color: #05070a;
-            --panel-bg: rgba(15, 20, 30, 0.7);
+            --panel-bg: rgba(18, 22, 32, 0.7);
             --accent-glow: #ff5500;
+            --steam-blue: #66c0f4;
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
-            --text-muted: #a1a9b5;
+            --text-muted: #8b92a5;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
@@ -25,23 +26,23 @@
             overflow-x: hidden;
         }
 
-        /* TŁO ANIMOWANE */
+        /* --- TŁO DYMNE --- */
         .smoke-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(20, 25, 35, 0.4) 0%, #05070a 90%),
+            background: radial-gradient(circle at 50% 50%, rgba(20, 25, 35, 0.5) 0%, #05070a 80%),
                         url('https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/environmental/nuke_01.jpg') no-repeat center center;
             background-size: cover;
             z-index: -1;
-            filter: brightness(0.25);
-            animation: drift 40s infinite alternate linear;
+            filter: brightness(0.3);
+            animation: drift 30s infinite alternate ease-in-out;
         }
-        @keyframes drift { from { transform: scale(1); } to { transform: scale(1.1); } }
+        @keyframes drift { from { transform: scale(1.05); } to { transform: scale(1.1); } }
 
-        /* SIDEBAR Z LOGO NA GÓRZE */
+        /* --- SIDEBAR Z LOGO NA GÓRZE --- */
         .sidebar {
-            width: 90px;
-            background: rgba(10, 12, 18, 0.95);
+            width: 80px;
+            background: rgba(10, 12, 18, 0.9);
             border-right: 1px solid var(--glass-border);
             display: flex;
             flex-direction: column;
@@ -51,74 +52,67 @@
             height: 100vh;
             z-index: 100;
         }
+        
         .sidebar-logo {
             width: 50px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
         }
+
         .nav-item {
-            width: 55px; height: 55px;
+            width: 50px; height: 50px;
             display: flex; align-items: center; justify-content: center;
             color: var(--text-muted);
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            border-radius: 15px;
-            transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            transition: 0.3s;
             text-decoration: none;
-            border: 1px solid transparent;
         }
         .nav-item.active, .nav-item:hover {
             color: #fff;
-            background: rgba(255, 85, 0, 0.1);
-            border-color: var(--accent-glow);
-            box-shadow: 0 0 20px rgba(255, 85, 0, 0.2);
+            background: var(--accent-glow);
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        /* GŁÓWNY CONTENT */
+        /* --- KONTENER GŁÓWNY --- */
         .main-content {
-            margin-left: 90px;
+            margin-left: 80px;
             padding: 40px;
             width: 100%;
             display: grid;
-            grid-template-columns: 1fr 380px;
+            grid-template-columns: 1fr 350px;
             gap: 30px;
         }
 
-        /* HEADER */
-        .page-header {
+        .top-nav {
             grid-column: span 2;
-            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
-        .page-header h2 { font-size: 2.2rem; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* CSREP SECTION */
+        /* --- PANEL CSREP.GG --- */
         .csrep-panel {
             grid-column: span 2;
-            background: linear-gradient(90deg, rgba(255, 85, 0, 0.1), transparent);
+            background: linear-gradient(90deg, rgba(255, 85, 0, 0.15), rgba(18, 22, 32, 0.7));
             border: 1px solid var(--glass-border);
-            padding: 20px 30px;
+            padding: 20px;
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             backdrop-filter: blur(10px);
         }
-        .csrep-info b { color: #ff5500; font-size: 1.2rem; }
-        .csrep-link {
-            padding: 10px 20px;
-            background: #fff;
-            color: #000;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.8rem;
-            transition: 0.3s;
-        }
-        .csrep-link:hover { transform: scale(1.05); background: #eee; }
+        .csrep-stats { display: flex; gap: 30px; }
+        .csrep-stat-item { text-align: center; }
+        .csrep-stat-item span { display: block; color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; }
+        .csrep-stat-item b { font-size: 1.2rem; color: var(--accent-glow); }
 
-        /* KARTY STATYSTYK */
-        .stats-grid {
+        /* --- STATYSTYKI --- */
+        .stats-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
@@ -126,18 +120,18 @@
         }
         .stat-card {
             background: var(--panel-bg);
-            padding: 25px;
-            border-radius: 20px;
+            padding: 20px;
+            border-radius: 16px;
             border: 1px solid var(--glass-border);
             text-align: center;
-            transition: 0.3s;
+            backdrop-filter: blur(10px);
         }
-        .stat-card:hover { border-color: var(--accent-glow); transform: translateY(-5px); }
-        .stat-card span { display: block; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
-        .stat-card b { font-size: 1.8rem; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+        .stat-card span { display: block; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
+        .stat-card b { font-size: 1.6rem; color: #fff; }
+        .stat-card.lvl { border-bottom: 3px solid var(--accent-glow); }
 
-        /* PRZYCISKI */
-        .btn-container {
+        /* --- PRZYCISKI --- */
+        .hero-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
@@ -147,45 +141,47 @@
             background: var(--panel-bg);
             border: 1px solid var(--glass-border);
             padding: 20px;
-            border-radius: 18px;
+            border-radius: 15px;
             text-decoration: none;
             color: #fff;
             display: flex;
             align-items: center;
             gap: 15px;
             transition: 0.3s;
+            backdrop-filter: blur(10px);
         }
-        .btn:hover { background: rgba(255,255,255,0.05); border-color: #fff; }
-        .btn i { font-size: 1.5rem; color: var(--accent-glow); }
-        .btn img { height: 26px; }
+        .btn:hover { transform: translateY(-5px); background: rgba(255,255,255,0.05); border-color: #fff; }
+        .btn i { font-size: 1.6rem; color: var(--accent-glow); }
+        .btn img { height: 28px; filter: grayscale(1); transition: 0.3s; }
+        .btn:hover img { filter: grayscale(0); }
 
-        /* PRAWA KOLUMNA */
-        .right-sidebar {
+        /* --- PRAWA KOLUMNA --- */
+        .right-col {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 20px;
         }
         .status-card {
             background: var(--panel-bg);
-            border-radius: 20px;
             padding: 20px;
+            border-radius: 20px;
             border: 1px solid var(--glass-border);
+            text-align: center;
         }
-        .status-online { display: flex; align-items: center; gap: 10px; color: #00d381; font-weight: bold; }
-        .dot { width: 10px; height: 10px; background: #00d381; border-radius: 50%; box-shadow: 0 0 10px #00d381; }
+        .status-online { color: #00d381; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .dot { width: 8px; height: 8px; background: #00d381; border-radius: 50%; box-shadow: 0 0 10px #00d381; }
 
-        .yt-box {
+        .yt-card {
             background: #000;
             border-radius: 20px;
             overflow: hidden;
             border: 1px solid var(--glass-border);
             aspect-ratio: 9/16;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1100px) {
             .main-content { grid-template-columns: 1fr; }
-            .right-sidebar { display: none; }
+            .right-col { display: none; }
         }
     </style>
 </head>
@@ -205,40 +201,45 @@
         <a href="https://steamcommunity.com/id/REFIs" target="_blank" class="nav-item">
             <i class="fa-brands fa-steam"></i>
         </a>
-        <a href="ts3server://4gamers.gclan.pl" class="nav-item">
-            <i class="fa-solid fa-headset"></i>
-        </a>
     </div>
 
     <div class="main-content">
-        <div class="page-header">
-            <h2 id="greet">Witaj, REFI</h2>
+        <div class="top-nav">
+            <div class="welcome-text">
+                <h2 id="greet">Witaj, REFI</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Twoje centrum dowodzenia.</p>
+            </div>
         </div>
 
         <div class="csrep-panel">
-            <div class="csrep-info">
-                <span>Profil Reputacji:</span><br>
-                <b>CSREP.GG Verified Player</b>
+            <div class="csrep-main">
+                <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Zaufany Gracz</span>
+                <h3 style="color: #fff;">csrep.gg/REFIs</h3>
             </div>
-            <a href="https://csrep.gg/player/76561198819835529" target="_blank" class="csrep-link">ZOBACZ PROFIL</a>
+            <div class="csrep-stats">
+                <div class="csrep-stat-item"><span>Reputacja</span><b>+154</b></div>
+                <div class="csrep-stat-item"><span>Pochwały</span><b>84</b></div>
+                <div class="csrep-stat-item"><span>Poziom</span><b>Elite</b></div>
+            </div>
+            <a href="https://csrep.gg/player/76561198819835529" target="_blank" class="btn" style="padding: 10px 20px; margin: 0; font-size: 0.8rem;">PROFIL</a>
         </div>
 
         <div class="left-col">
-            <div class="stats-grid">
-                <div class="stat-card"><span>Poziom</span><b>10</b></div>
+            <div class="stats-row">
+                <div class="stat-card lvl"><span>Poziom</span><b>10</b></div>
                 <div class="stat-card"><span>Elo</span><b>2214</b></div>
-                <div class="stat-card"><span>Win Rate</span><b>50.4%</b></div>
-                <div class="stat-card"><span>Matches</span><b>1,800+</b></div>
+                <div class="stat-card"><span>Win Rate</span><b>50%</b></div>
+                <div class="stat-card"><span>K/D</span><b>1.02</b></div>
             </div>
 
-            <div class="btn-container">
+            <div class="hero-grid">
                 <a href="https://dmarket.com/" target="_blank" class="btn">
                     <img src="Dmarket.png" alt="D">
-                    <div><b>DMarket</b><br><small>Inventory & Trade</small></div>
+                    <div><b>DMarket</b><br><small>Handluj skinami</small></div>
                 </a>
                 <a href="https://csfloat.com/" target="_blank" class="btn">
                     <img src="csfloat.png" alt="F">
-                    <div><b>CSFloat</b><br><small>Market Database</small></div>
+                    <div><b>CSFloat</b><br><small>Baza danych</small></div>
                 </a>
                 <a href="https://www.tiktok.com/@x_refi_x" target="_blank" class="btn">
                     <i class="fa-brands fa-tiktok"></i>
@@ -250,28 +251,40 @@
                 </a>
             </div>
 
-            <div style="background: var(--panel-bg); padding: 30px; border-radius: 20px; border: 1px solid var(--glass-border);">
-                <p style="margin-bottom: 15px; color: var(--text-muted); letter-spacing: 2px;">OSTATNIA AKTYWNOŚĆ</p>
-                <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                    <span>Match vs. Team Liquid</span>
-                    <span style="color: #00d381;">WYGRANA</span>
+            <div class="history-section">
+                <p class="history-title">OSTATNIE MECZE</p>
+                <div class="match-row">
+                    <span>Mirage</span>
+                    <b>13 : 8</b>
+                    <span style="color: #00d381;">WIN</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; padding: 10px 0;">
-                    <span>Match vs. NAVI Fanclub</span>
-                    <span style="color: #ff3366;">PRZEGRANA</span>
+                <div class="match-row loss">
+                    <span>Anubis</span>
+                    <b>10 : 13</b>
+                    <span style="color: #ff3366;">LOSS</span>
+                </div>
+                <div class="match-row">
+                    <span>Ancient</span>
+                    <b>16 : 14</b>
+                    <span style="color: #00d381;">WIN</span>
                 </div>
             </div>
         </div>
 
-        <div class="right-sidebar">
+        <div class="right-col">
             <div class="status-card">
-                <div class="status-online"><div class="dot"></div> IN-GAME (CS2)</div>
-                <p style="font-size: 0.8rem; margin-top: 5px; color: var(--text-muted);">Trenuje na de_nuke</p>
+                <div class="status-online"><div class="dot"></div> ONLINE</div>
+                <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 5px;">GOTOWY DO GRY</p>
             </div>
 
-            <div class="yt-box">
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; letter-spacing: 2px;">PLAYLISTA REFI</p>
+            <div class="yt-card">
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/blOGjmQVOp0?list=PLOhj10DD_CCHa8QHZKwfWN2VU0XEBEb3Z" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
+            
+            <a href="ts3server://4gamers.gclan.pl" class="btn" style="justify-content: center;">
+                <i class="fa-solid fa-headset"></i> TeamSpeak 3
+            </a>
         </div>
     </div>
 
